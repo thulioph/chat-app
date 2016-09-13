@@ -31,6 +31,7 @@
       };
 
       vm.chat_logs = [];
+      vm.system_logs = [];
 
       // ====
 
@@ -47,7 +48,8 @@
         firebase.initializeApp(config);
         database = firebase.database();
 
-        vm.chat_log = firebase.database().ref('chat_log/');
+        vm.chat_log = firebase.database().ref('chat_log');
+        vm.system_log = firebase.database().ref('system_log');
         vm.socket = io();
 
         listenDb();
@@ -59,6 +61,14 @@
           $timeout(function() {
             $scope.$apply(function() {
               vm.chat_logs = snapshot.val();
+            })
+          }, 10);
+        });
+
+        vm.system_log.on('value', function(snapshot) {
+          $timeout(function() {
+            $scope.$apply(function() {
+              vm.system_logs = snapshot.val();
             })
           }, 10);
         });

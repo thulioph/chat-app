@@ -30,11 +30,13 @@
     <aside ng-repeat="event in main.chat_logs">
       <li>
         <span>{{event.username}}</span>
-        <small>( {{event.timestamp}} )</small>
-
-        <br>
-        <p>Pergunta: {{event.message}}</p>
+        <small>{{event.timestamp}}</small>
+        <p>{{event.message}}</p>
       </li>
+    </aside>
+
+    <aside ng-repeat="log in main.system_logs">
+      <small>{{log.message}}</small>
     </aside>
   </div>
 
