@@ -19,22 +19,18 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-  // enviar essas informações pro backend
-  console.log('an user connected ' + new Date());
+  var msg = 'user connected at ' + new Date();
+  io.emit('user connected', msg);
 
   // quando um socket é desconectado
-  // enviar essas informações pro backend
   socket.on('disconnect', function() {
-    console.log('an user disconnected ' + new Date());
-
-    var msg = 'an user disconnected ' + new Date();
+    var msg = 'user disconnected at ' + new Date();
     io.emit('user disconnect', msg);
   });
 
   // recebendo o evento de chat message
   socket.on('send message', function(msg){
     io.emit('chat message', msg);
-    console.log('message: ' + msg);
   });
 });
 
