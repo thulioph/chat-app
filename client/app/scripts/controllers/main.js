@@ -35,9 +35,7 @@
       // ====
 
       function initFirebase() {
-        console.info('initFirebase');
-
-        var config, database, chat_log;
+        var config, database;
 
         config = {
           apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
@@ -52,18 +50,12 @@
         vm.chat_log = firebase.database().ref('chat_log/');
         vm.socket = io();
 
-        // $scope.$emit('firebase_ok');
-
         listenDb();
         listeners();
       }
 
       function listenDb() {
-        console.info('listenDb');
-
         vm.chat_log.on('value', function(snapshot) {
-          console.warn('Houve atualização...', snapshot.val());
-
           $timeout(function() {
             $scope.$apply(function() {
               vm.chat_logs = snapshot.val();
@@ -73,29 +65,33 @@
       }
 
       function listeners() {
-        console.info('listeners');
-
-        vm.socket.on('chat message', function(msg){
-          console.warn('chat message', msg);
+        vm.socket.on('chat message', function(msg) {
+          vm.database.set('chat_log', msg, 'chat');
         });
 
         vm.socket.on('user disconnect', function(msg) {
-          console.warn('user disconnect', msg);
-        })
+          vm.database.set('system_log', msg, 'log');
+        });
+
+        vm.socket.on('user connected', function(msg) {
+          vm.database.set('system_log', msg, 'log');
+        });
       }
 
       function set(db, data, type) {
-        console.info('set');
-
         var obj;
 
         // check the type of insertion
         if (type === 'chat') {
           obj = {
             'username': data.name,
-            'msg': data.msg,
-            'event_name': data.event,
+            'message': data.msg,
+            'event': data.event,
             'timestamp': new Date().getTime()
+          }
+        } else {
+          obj = {
+            'message': data
           }
         }
 
@@ -104,16 +100,13 @@
         .ref(db)
         .push(obj)
         .then(function(data) {
-          console.info('inserção finalizada!');
+          console.info('rolou alteração!');
         }, function(err) {
           console.warn('deu erro na inserção! ', err);
         });
       }
 
       function submitForm() {
-        console.info('submitForm');
-
-        vm.database.set('chat_log', vm.form, 'chat');
         vm.socket.emit('send message', vm.form);
         vm.form = {};
       }
