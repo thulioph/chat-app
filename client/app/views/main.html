@@ -1,0 +1,41 @@
+<div ng-init="main.init()">
+
+  <div class="col-xs-12">
+    <form ng-submit="main.form.submitForm()">
+      <fieldset class="form-group">
+        <label for="name">Nome</label>
+        <input class="form-control" type="text" id="name" ng-model="main.form.name" placeholder="Nome">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="event">Evento</label>
+        <input class="form-control" type="text" id="event" ng-model="main.form.event" placeholder="Qual evento você está?">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="msg">Mensagem</label>
+        <textarea class="form-control" id="msg" ng-model="main.form.msg" placeholder="Mensagem">
+        </textarea>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </fieldset>
+    </form>
+  </div>
+
+  <hr>
+
+  <div class="row marketing">
+    <aside ng-repeat="event in main.chat_logs">
+      <li>
+        <span>{{event.username}}</span>
+        <small>( {{event.timestamp}} )</small>
+
+        <br>
+        <p>Pergunta: {{event.msg}}</p>
+      </li>
+    </aside>
+  </div>
+
+</div>
