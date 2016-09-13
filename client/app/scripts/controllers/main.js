@@ -14,16 +14,15 @@
     .module('chatAppApp')
     .controller('MainCtrl', MainCtrl);
 
-    // MainCtrl.$inject = [''];
+    MainCtrl.$inject = ['$scope', '$timeout'];
 
-    function MainCtrl() {
+    function MainCtrl($scope, $timeout) {
       var vm;
 
       vm = this;
 
       vm.init = initFirebase();
       vm.database = {
-        'listen': listen,
         'set': set
       };
 
@@ -36,7 +35,9 @@
       // ====
 
       function initFirebase() {
-        var config;
+        console.info('initFirebase');
+
+        var config, database, chat_log;
 
         config = {
           apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
@@ -46,76 +47,73 @@
         };
 
         firebase.initializeApp(config);
+        database = firebase.database();
 
-        initDataBase(firebase);
-        initSocket();
+        vm.chat_log = firebase.database().ref('chat_log/');
+        vm.socket = io();
+
+        // $scope.$emit('firebase_ok');
+
+        listenDb();
+        listeners();
       }
 
-      function initSocket() {
-        var socket;
+      function listenDb() {
+        console.info('listenDb');
 
-        socket = io();
-        vm.socket = socket;
+        vm.chat_log.on('value', function(snapshot) {
+          console.warn('Houve atualização...', snapshot.val());
 
-        listeners(socket);
+          $timeout(function() {
+            $scope.$apply(function() {
+              vm.chat_logs = snapshot.val();
+            })
+          }, 10);
+        });
       }
 
-      function listeners(socket) {
-        socket.on('chat message', function(msg){
+      function listeners() {
+        console.info('listeners');
+
+        vm.socket.on('chat message', function(msg){
           console.warn('chat message', msg);
-          listen();
-
-          // $('#messages').append($('<li>').text(msg));
         });
 
-        socket.on('user disconnect', function(msg) {
+        vm.socket.on('user disconnect', function(msg) {
           console.warn('user disconnect', msg);
-
-          // $('#messages').append($('<li>').text(msg).css('font-style', 'italic'));
         })
       }
 
-      function initDataBase(firebase) {
-        var database;
+      function set(db, data, type) {
+        console.info('set');
 
-        database = firebase.database();
-        listen();
-      }
-
-      function listen() {
-        var db;
-
-        db = firebase.database().ref('chat_log/');
-
-        db.on('value', function(snapshot) {
-          console.log(snapshot.val())
-          vm.chat_logs = snapshot.val();
-        });
-      }
-
-      function set(data) {
         var obj;
 
-        obj = {
-          'username': data.name,
-          'msg': data.msg,
-          'event_name': data.event,
-          'timestamp': new Date().getTime()
-        };
+        // check the type of insertion
+        if (type === 'chat') {
+          obj = {
+            'username': data.name,
+            'msg': data.msg,
+            'event_name': data.event,
+            'timestamp': new Date().getTime()
+          }
+        }
 
         firebase
         .database()
-        .ref('chat_log')
+        .ref(db)
         .push(obj)
         .then(function(data) {
-          console.log('tudo ok');
+          console.info('inserção finalizada!');
         }, function(err) {
-          console.warn('tudo errado ', err);
+          console.warn('deu erro na inserção! ', err);
         });
       }
 
       function submitForm() {
-        vm.database.set(vm.form);
+        console.info('submitForm');
+
+        vm.database.set('chat_log', vm.form, 'chat');
         vm.socket.emit('send message', vm.form);
         vm.form = {};
       }
