@@ -48,6 +48,31 @@
         firebase.initializeApp(config);
 
         initDataBase(firebase);
+        initSocket();
+      }
+
+      function initSocket() {
+        var socket;
+
+        socket = io();
+        vm.socket = socket;
+
+        listeners(socket);
+      }
+
+      function listeners(socket) {
+        socket.on('chat message', function(msg){
+          console.warn('chat message', msg);
+          listen();
+
+          // $('#messages').append($('<li>').text(msg));
+        });
+
+        socket.on('user disconnect', function(msg) {
+          console.warn('user disconnect', msg);
+
+          // $('#messages').append($('<li>').text(msg).css('font-style', 'italic'));
+        })
       }
 
       function initDataBase(firebase) {
@@ -91,6 +116,8 @@
 
       function submitForm() {
         vm.database.set(vm.form);
+        vm.socket.emit('send message', vm.form);
+        vm.form = {};
       }
     }
 

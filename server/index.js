@@ -1,15 +1,18 @@
-var app, http, path, io;
+var express, app, http, path, io;
 
-app = require('express')();
+express = require('express');
+app = express();
 http = require('http').Server(app);
 path = require('path');
 io = require('socket.io')(http);
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/', function(req, res) {
   var fileObj;
 
   fileObj = {
-    root: path.join(__dirname, 'public')
+    root: path.join(__dirname, '../client/dist/') // /public
   };
 
   res.sendFile('index.html', fileObj);
