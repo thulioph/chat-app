@@ -26,9 +26,9 @@
         'set': set
       };
 
-      vm.form = {
-        submitForm: submitForm
-      };
+      vm.submitForm = submitForm;
+
+      vm.form = {};
 
       vm.chat_logs = [];
       vm.system_logs = [];
@@ -117,8 +117,8 @@
       }
 
       function submitForm() {
+        console.warn('vm.form -> ', vm.form);
         vm.socket.emit('send message', vm.form);
-        vm.form = {};
       }
     }
 

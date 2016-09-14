@@ -3,6 +3,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+@import "_landing";
+@import "_animations";
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -15,6 +18,10 @@ ul {
       background-color: #eee;
     }
   }
+}
+
+textarea {
+  resize: none;
 }
 
 .browsehappy {
