@@ -1,7 +1,6 @@
 <div ng-init="main.init()">
-
-  <div class="col-xs-12">
-    <form ng-submit="main.form.submitForm()">
+  <aside class="form-area">
+    <form>
       <fieldset class="form-group">
         <label for="name">Nome</label>
         <input class="form-control" type="text" id="name" ng-model="main.form.name" placeholder="Nome">
@@ -19,25 +18,22 @@
       </fieldset>
 
       <fieldset class="form-group">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button class="btn btn-primary" ng-click="main.submitForm()">Perguntar</button>
       </fieldset>
     </form>
-  </div>
+  </aside>
 
-  <hr>
-
-  <div class="row marketing">
-    <aside ng-repeat="event in main.chat_logs">
+  <aside class="chat-feeds">
+    <div ng-repeat="event in main.chat_logs track by event.timestamp">
       <li>
         <span>{{event.username}}</span>
-        <small>{{event.timestamp}}</small>
+        <small>{{event.timestamp | date: "h:mma"}}</small>
         <p>{{event.message}}</p>
       </li>
-    </aside>
+    </div>
 
-    <aside ng-repeat="log in main.system_logs">
+    <!-- <div ng-repeat="log in main.system_logs">
       <small>{{log.message}}</small>
-    </aside>
-  </div>
-
+    </div> -->
+  </aside>
 </div>

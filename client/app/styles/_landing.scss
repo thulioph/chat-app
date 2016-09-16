@@ -1,0 +1,79 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.header {
+  min-height: 290px;
+  background-color: black;
+  width: 100%;
+  float: none;
+  text-align: center;
+  position: relative;
+}
+
+.title {
+  color: #FFF;
+  display: block;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-top: 80px;
+  font-size: 40px;
+}
+
+.subtitle {
+  color: #CCC;
+  font-weight: 300;
+}
+
+.footer { text-align: center; }
+
+.box {
+  margin-bottom: 80px;
+
+  &.m-10 { margin-bottom: 10px; }
+
+  h3 { font-weight: 400; }
+
+  p {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  a { text-decoration: none; }
+}
+
+.glyphicon-heart { color: red; }
+
+.map-canvas {
+  height: 240px;
+  margin-bottom: 80px;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+}
+
+.browser-support {
+  li {
+    margin-bottom: 10px;
+
+    &:first-child { margin-top: 30px; }
+  }
+
+  img {
+    width: 42px;
+    height: 42px;
+  }
+
+  p { display: inline-block; }
+}
+
+.form-area {
+  @extend .col-xs-12;
+}
+
+.chat-feeds {
+  @extend .col-xs-12;
+
+  overflow-y: scroll;
+  height: 280px;
+}
