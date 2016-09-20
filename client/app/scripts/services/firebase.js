@@ -10,13 +10,13 @@
    * Service in the chatAppApp.
    */
 
-  function Firebase($firebaseObject, $log, $rootScope) {
+  function Firebase($firebaseObject, $log, $rootScope, $timeout) {
     var Firebase, ref, all_data;
 
     return Firebase = {
       'init': init,
       'setDb': setDataBase,
-      // 'getAllData': _getAllData()
+      'listenDb': listenDatabase,
     }
 
     // ====
@@ -38,17 +38,16 @@
       return firebase.database().ref(db);
     }
 
-    function _getAllData() {
-      ref = new Firebase('https://157.firebaseio.com');
-
-      all_data = $firebaseObject(ref);
-      $log.warn('all_data', all_data)
-
-      return all_data;
+    function listenDatabase(db, callback) {
+      db.on('value', function(snapshot) {
+        $timeout(function() {
+          return callback(snapshot.val())
+        }, 10);
+      });
     }
   }
 
-  Firebase.$inject = ['$firebaseObject', '$log', '$rootScope'];
+  Firebase.$inject = ['$firebaseObject', '$log', '$rootScope', '$timeout'];
 
   angular
   .module('chatAppApp')
