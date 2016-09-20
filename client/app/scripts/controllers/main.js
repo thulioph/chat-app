@@ -45,13 +45,15 @@
       }
 
       function initDb() {
-        var chat_log, system_log;
+        var chat_log, system_log, user_entry;
 
         chat_log = Firebase.setDb('chat_log');
         system_log = Firebase.setDb('system_log');
+        user_entry = Firebase.setDb('user_entry');
 
         vm.listenDb(chat_log);
         vm.listenDb(system_log);
+        vm.listenDb(user_entry);
       }
 
       function listenDb(db) {
@@ -62,11 +64,11 @@
 
       function listenSocket() {
         vm.socket.on('user:message', function(data) {
-          Firebase.setItem('system_log', data);
+          Firebase.setItem('chat_log', data);
         });
 
         vm.socket.on('user:user_data', function(data) {
-          Firebase.setItem('chat_log', data);
+          Firebase.setItem('user_entry', data);
         });
 
         vm.socket.on('guest:disconnect', function(data) {
