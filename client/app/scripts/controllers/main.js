@@ -21,10 +21,13 @@
 
       vm = this;
 
+      vm.signUp = userSignUp;
       vm.submitForm = submitForm;
+
       vm.listenDb = listenDb;
 
       vm.form = {};
+      vm.message;
 
       vm.chat_logs = [];
       vm.system_logs = [];
@@ -58,45 +61,46 @@
       }
 
       function listenSocket() {
-        vm.socket.on('chat message', function(msg) {
-          var obj;
-
-          obj = {
-            'message': msg,
-            'username': vm.form.username,
-            'event': vm.form.event,
-            'timestamp': new Date().getTime()
-          };
-
-          Firebase.setItem('system_log', obj);
+        vm.socket.on('user:message', function(data) {
+          Firebase.setItem('system_log', data);
         });
 
-        vm.socket.on('user disconnect', function(msg) {
-          var obj;
-
-          obj = {
-            'message': msg,
-            'timestamp': new Date().getTime()
-          };
-
-          Firebase.setItem('system_log', obj);
+        vm.socket.on('user:user_data', function(data) {
+          Firebase.setItem('chat_log', data);
         });
 
-        vm.socket.on('user connected', function(msg) {
-          var obj;
+        vm.socket.on('guest:disconnect', function(data) {
+          Firebase.setItem('system_log', data);
+        });
 
-          obj = {
-            'message': msg,
-            'timestamp': new Date().getTime()
-          };
-
-          Firebase.setItem('system_log', obj);
+        vm.socket.on('guest:connected', function(data) {
+          Firebase.setItem('system_log', data);
         });
       }
 
+      function userSignUp() {
+        var obj;
+
+        obj = {
+          'event': vm.form.event,
+          'username': vm.form.username,
+          'timestamp': new Date().getTime()
+        };
+
+        vm.socket.emit('user:sign_up', obj);
+      }
+
       function submitForm() {
-        console.warn('vm.form', vm.form);
-        // vm.socket.emit('send message', vm.form);
+        var obj;
+
+        obj = {
+          'event': vm.form.event,
+          'username': vm.form.username,
+          'message': vm.message,
+          'timestamp': new Date().getTime()
+        };
+
+        vm.socket.emit('user:send_message', obj);
       }
     }
 
