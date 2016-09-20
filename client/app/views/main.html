@@ -1,39 +1,37 @@
-<div ng-init="main.init()">
-  <aside class="form-area">
-    <form>
-      <fieldset class="form-group">
-        <label for="name">Nome</label>
-        <input class="form-control" type="text" id="name" ng-model="main.form.name" placeholder="Nome">
-      </fieldset>
+<aside class="form-area">
+  <form>
+    <fieldset class="form-group">
+      <label for="name">Nome</label>
+      <input class="form-control" type="text" id="name" ng-model="main.form.name" placeholder="Nome">
+    </fieldset>
 
-      <fieldset class="form-group">
-        <label for="event">Evento</label>
-        <input class="form-control" type="text" id="event" ng-model="main.form.event" placeholder="Qual evento você está?">
-      </fieldset>
+    <fieldset class="form-group">
+      <label for="event">Evento</label>
+      <input class="form-control" type="text" id="event" ng-model="main.form.event" placeholder="Qual evento você está?">
+    </fieldset>
 
-      <fieldset class="form-group">
-        <label for="msg">Mensagem</label>
-        <textarea class="form-control" id="msg" ng-model="main.form.msg" placeholder="Mensagem">
-        </textarea>
-      </fieldset>
+    <fieldset class="form-group">
+      <label for="msg">Mensagem</label>
+      <textarea class="form-control" id="msg" ng-model="main.form.msg" placeholder="Mensagem">
+      </textarea>
+    </fieldset>
 
-      <fieldset class="form-group">
-        <button class="btn btn-primary" ng-click="main.submitForm()">Perguntar</button>
-      </fieldset>
-    </form>
-  </aside>
+    <fieldset class="form-group">
+      <button class="btn btn-primary" ng-click="main.submitForm()">Perguntar</button>
+    </fieldset>
+  </form>
+</aside>
 
-  <aside class="chat-feeds">
-    <div ng-repeat="event in main.chat_logs track by event.timestamp">
-      <li>
-        <span>{{event.username}}</span>
-        <small>{{event.timestamp | date: "h:mma"}}</small>
-        <p>{{event.message}}</p>
-      </li>
-    </div>
+<aside class="chat-feeds">
+  <div ng-repeat="event in main.chat_logs track by event.timestamp">
+    <li>
+      <span>{{event.username}}</span>
+      <small>{{event.timestamp | date: "h:mma"}}</small>
+      <p>{{event.message}}</p>
+    </li>
+  </div>
 
-    <!-- <div ng-repeat="log in main.system_logs">
-      <small>{{log.message}}</small>
-    </div> -->
-  </aside>
-</div>
+  <!-- <div ng-repeat="log in main.system_logs">
+    <small>{{log.message}}</small>
+  </div> -->
+</aside>
