@@ -10,22 +10,25 @@
    * Factory in the chatAppApp.
    */
 
-  angular
-  .module('chatAppApp')
-  .factory('SocketService', SocketService);
-
-  SocketService.$inject = ['$log'];
-
   function SocketService($log) {
     var SocketService;
 
     return SocketService = {
-      'get': _get
+      'init': init,
     }
 
-    function _get() {
-      return $log.warn('DALE!');
+    function init() {
+      $log.warn('IO!');
+      return io();
+
+      // vm.socket = io();
     }
   }
+
+  SocketService.$inject = ['$log'];
+
+  angular
+  .module('chatAppApp')
+  .factory('SocketService', SocketService);
 
 })();
