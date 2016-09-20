@@ -14,14 +14,11 @@
     var SocketService;
 
     return SocketService = {
-      'init': init,
+      'init': init
     }
 
     function init() {
-      $log.warn('IO!');
       return io();
-
-      // vm.socket = io();
     }
   }
 
