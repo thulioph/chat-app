@@ -1,29 +1,51 @@
-<aside class="form-area">
-  <form>
+<aside>
+  <!-- Sign up -->
+  <form class="form-area">
     <fieldset class="form-group">
       <label for="name">Nome</label>
-      <input class="form-control" type="text" id="name" ng-model="main.form.name" placeholder="Nome">
+      <input
+        class="form-control"
+        type="text"
+        id="name"
+        ng-model="vm.form.username"
+        placeholder="Nome">
     </fieldset>
 
     <fieldset class="form-group">
       <label for="event">Evento</label>
-      <input class="form-control" type="text" id="event" ng-model="main.form.event" placeholder="Qual evento você está?">
+      <input
+        class="form-control"
+        type="text"
+        id="event"
+        ng-model="vm.form.event"
+        placeholder="Qual evento você está?">
     </fieldset>
 
+    <button ng-click="vm.signUp()">Entrar</button>
+  </form>
+
+  <!-- Mensagem -->
+  <form class="form-area">
     <fieldset class="form-group">
       <label for="msg">Mensagem</label>
-      <textarea class="form-control" id="msg" ng-model="main.form.msg" placeholder="Mensagem">
+      <textarea
+        class="form-control"
+        id="msg"
+        ng-model="vm.message"
+        placeholder="Mensagem">
       </textarea>
     </fieldset>
 
     <fieldset class="form-group">
-      <button class="btn btn-primary" ng-click="main.submitForm()">Perguntar</button>
+      <button class="btn btn-primary" ng-click="vm.submitForm()">
+        Perguntar
+      </button>
     </fieldset>
   </form>
 </aside>
 
 <aside class="chat-feeds">
-  <div ng-repeat="event in main.chat_logs track by event.timestamp">
+  <div ng-repeat="event in vm.chat_logs track by event.timestamp">
     <li>
       <span>{{event.username}}</span>
       <small>{{event.timestamp | date: "h:mma"}}</small>
@@ -31,7 +53,7 @@
     </li>
   </div>
 
-  <!-- <div ng-repeat="log in main.system_logs">
+  <!-- <div ng-repeat="log in vm.system_logs">
     <small>{{log.message}}</small>
   </div> -->
 </aside>
