@@ -14,9 +14,9 @@
     .module('chatAppApp')
     .controller('MainCtrl', MainCtrl);
 
-    MainCtrl.$inject = ['$scope', '$timeout', 'SocketService'];
+    MainCtrl.$inject = ['$scope', '$timeout', 'SocketService', 'Firebase'];
 
-    function MainCtrl($scope, $timeout, SocketService) {
+    function MainCtrl($scope, $timeout, SocketService, Firebase) {
       var vm;
 
       vm = this;
@@ -36,20 +36,29 @@
       // ====
 
       function initFirebase() {
-        var config, database;
+        Firebase.init();
+        var banco = Firebase.setDb('bus');
+        var sys_admin = Firebase.setDb('sys_admin');
 
-        config = {
-          apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
-          authDomain: "realtime-chatapp.firebaseapp.com",
-          databaseURL: "https://realtime-chatapp.firebaseio.com",
-          storageBucket: "realtime-chatapp.appspot.com",
-        };
+        return console.log(banco, sys_admin);
 
-        firebase.initializeApp(config);
-        database = firebase.database();
 
-        vm.chat_log = firebase.database().ref('chat_log');
-        vm.system_log = firebase.database().ref('system_log');
+        // var config, database;
+
+        // config = {
+        //   apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
+        //   authDomain: "realtime-chatapp.firebaseapp.com",
+        //   databaseURL: "https://realtime-chatapp.firebaseio.com",
+        //   storageBucket: "realtime-chatapp.appspot.com",
+        // };
+
+        // firebase.initializeApp(config);
+        // database = firebase.database();
+
+        // vm.chat_log = firebase.database().ref('chat_log');
+        // vm.system_log = firebase.database().ref('system_log');
+
+        // socket.io
         vm.socket = io();
 
         listenDb();

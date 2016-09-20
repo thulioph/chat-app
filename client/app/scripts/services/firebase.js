@@ -10,17 +10,32 @@
    * Service in the chatAppApp.
    */
 
-  angular
-  .module('chatAppApp')
-  .service('Firebase', Firebase);
-
-  Firebase.$inject = ['$firebaseObject', '$log'];
-
-  function Firebase($firebaseObject, $log) {
+  function Firebase($firebaseObject, $log, $rootScope) {
     var Firebase, ref, all_data;
 
     return Firebase = {
-      'getAllData': _getAllData()
+      'init': init,
+      'setDb': setDataBase,
+      // 'getAllData': _getAllData()
+    }
+
+    // ====
+
+    function init() {
+      var config;
+
+      config = {
+        apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
+        authDomain: "realtime-chatapp.firebaseapp.com",
+        databaseURL: "https://realtime-chatapp.firebaseio.com",
+        storageBucket: "realtime-chatapp.appspot.com",
+      };
+
+      firebase.initializeApp(config);
+    }
+
+    function setDataBase(db) {
+      return firebase.database().ref(db);
     }
 
     function _getAllData() {
@@ -32,5 +47,11 @@
       return all_data;
     }
   }
+
+  Firebase.$inject = ['$firebaseObject', '$log', '$rootScope'];
+
+  angular
+  .module('chatAppApp')
+  .service('Firebase', Firebase);
 
 })();
