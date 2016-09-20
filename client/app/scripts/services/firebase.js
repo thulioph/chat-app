@@ -17,6 +17,7 @@
       'init': init,
       'setDb': setDataBase,
       'listenDb': listenDatabase,
+      'setItem': setIntoDatabase,
     }
 
     // ====
@@ -44,6 +45,14 @@
           return callback(snapshot.val())
         }, 10);
       });
+    }
+
+    function setIntoDatabase(db, obj) {
+      Firebase.setDb(db).push(obj).then(function(result) {
+        $log.warn('success_setIntoDatabase -> ', result);
+      }, function (err) {
+        $log.warn('err_setIntoDatabase -> ', err);
+      })
     }
   }
 
