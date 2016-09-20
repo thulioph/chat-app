@@ -14,9 +14,9 @@
   .module('chatAppApp')
   .service('Firebase', Firebase);
 
-  Firebase.$inject = ['$firebaseObject'];
+  Firebase.$inject = ['$firebaseObject', '$log'];
 
-  function Firebase($firebaseObject) {
+  function Firebase($firebaseObject, $log) {
     var Firebase, ref, all_data;
 
     return Firebase = {
@@ -27,7 +27,7 @@
       ref = new Firebase('https://157.firebaseio.com');
 
       all_data = $firebaseObject(ref);
-      console.warn('all_data', all_data)
+      $log.warn('all_data', all_data)
 
       return all_data;
     }

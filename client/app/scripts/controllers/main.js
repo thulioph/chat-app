@@ -14,9 +14,9 @@
     .module('chatAppApp')
     .controller('MainCtrl', MainCtrl);
 
-    MainCtrl.$inject = ['$scope', '$timeout'];
+    MainCtrl.$inject = ['$scope', '$timeout', 'SocketService'];
 
-    function MainCtrl($scope, $timeout) {
+    function MainCtrl($scope, $timeout, SocketService) {
       var vm;
 
       vm = this;
@@ -117,8 +117,8 @@
       }
 
       function submitForm() {
-        console.warn('vm.form -> ', vm.form);
-        vm.socket.emit('send message', vm.form);
+        console.warn('vm.form -> ', SocketService.get());
+        // vm.socket.emit('send message', vm.form);
       }
     }
 
