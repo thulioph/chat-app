@@ -29,8 +29,6 @@
       vm.chat_logs = [];
       vm.system_logs = [];
 
-      vm.socket;
-
       Init();
 
       // ====
@@ -61,46 +59,38 @@
 
       function listenSocket() {
         vm.socket.on('chat message', function(msg) {
-          $log.warn('chat message -> ', msg);
-          // vm.database.set('chat_log', msg, 'chat');
+          var obj;
+
+          obj = {
+            'message': msg,
+            'username': vm.form.username,
+            'event': vm.form.event,
+            'timestamp': new Date().getTime()
+          };
+
+          Firebase.setItem('system_log', obj);
         });
 
         vm.socket.on('user disconnect', function(msg) {
-          $log.warn('user disconnect -> ', msg);
-          // vm.database.set('system_log', msg, 'log');
+          var obj;
+
+          obj = {
+            'message': msg,
+            'timestamp': new Date().getTime()
+          };
+
+          Firebase.setItem('system_log', obj);
         });
 
         vm.socket.on('user connected', function(msg) {
-          $log.warn('user connected -> ', msg);
-          // vm.database.set('system_log', msg, 'log');
-        });
-      }
+          var obj;
 
-      function set(db, data, type) {
-        var obj;
-
-        // check the type of insertion
-        if (type === 'chat') {
           obj = {
-            'username': data.name,
-            'message': data.msg,
-            'event': data.event,
+            'message': msg,
             'timestamp': new Date().getTime()
-          }
-        } else {
-          obj = {
-            'message': data
-          }
-        }
+          };
 
-        firebase
-        .database()
-        .ref(db)
-        .push(obj)
-        .then(function(data) {
-          console.info('rolou alteração!');
-        }, function(err) {
-          console.warn('deu erro na inserção! ', err);
+          Firebase.setItem('system_log', obj);
         });
       }
 
