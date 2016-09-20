@@ -14,17 +14,12 @@
     .module('chatAppApp')
     .controller('MainCtrl', MainCtrl);
 
-    MainCtrl.$inject = ['$scope', '$timeout', 'SocketService', 'Firebase'];
+    MainCtrl.$inject = ['$scope', '$log', '$rootScope', '$timeout', 'SocketService', 'Firebase'];
 
-    function MainCtrl($scope, $timeout, SocketService, Firebase) {
+    function MainCtrl($scope, $log, $rootScope, $timeout, SocketService, Firebase) {
       var vm;
 
       vm = this;
-
-      vm.init = initFirebase();
-      vm.database = {
-        'set': set
-      };
 
       vm.submitForm = submitForm;
 
@@ -33,57 +28,40 @@
       vm.chat_logs = [];
       vm.system_logs = [];
 
+      Init();
+
       // ====
 
-      function initFirebase() {
+      function Init() {
         Firebase.init();
-        var banco = Firebase.setDb('bus');
-        var sys_admin = Firebase.setDb('sys_admin');
+        initDb();
+      }
 
-        return console.log(banco, sys_admin);
+      function initDb() {
+        $log.info('initDb');
 
+        var chat_log, system_log;
 
-        // var config, database;
+        chat_log = Firebase.setDb('chat_log');
+        system_log = Firebase.setDb('system_log');
 
-        // config = {
-        //   apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
-        //   authDomain: "realtime-chatapp.firebaseapp.com",
-        //   databaseURL: "https://realtime-chatapp.firebaseio.com",
-        //   storageBucket: "realtime-chatapp.appspot.com",
-        // };
+        Firebase.listenDb(chat_log, function(result) {
+          $log.warn('chat_log -> ', result);
+        });
 
-        // firebase.initializeApp(config);
-        // database = firebase.database();
+        Firebase.listenDb(system_log, function(result) {
+          $log.warn('system_log -> ', result);
+        });
 
-        // vm.chat_log = firebase.database().ref('chat_log');
-        // vm.system_log = firebase.database().ref('system_log');
+        return;
 
-        // socket.io
-        vm.socket = io();
-
-        listenDb();
+        SocketService.init();
         listeners();
       }
 
-      function listenDb() {
-        vm.chat_log.on('value', function(snapshot) {
-          $timeout(function() {
-            $scope.$apply(function() {
-              vm.chat_logs = snapshot.val();
-            })
-          }, 10);
-        });
-
-        vm.system_log.on('value', function(snapshot) {
-          $timeout(function() {
-            $scope.$apply(function() {
-              vm.system_logs = snapshot.val();
-            })
-          }, 10);
-        });
-      }
-
       function listeners() {
+        $log.info('listeners');
+
         vm.socket.on('chat message', function(msg) {
           vm.database.set('chat_log', msg, 'chat');
         });
@@ -126,7 +104,7 @@
       }
 
       function submitForm() {
-        console.warn('vm.form -> ', SocketService.get());
+        console.warn('vm.form', vm.form);
         // vm.socket.emit('send message', vm.form);
       }
     }
