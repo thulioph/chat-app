@@ -14,111 +14,95 @@
     .module('chatAppApp')
     .controller('MainCtrl', MainCtrl);
 
-    MainCtrl.$inject = ['$scope', '$timeout', 'SocketService'];
+    MainCtrl.$inject = ['$scope', '$log', '$rootScope', '$timeout', 'SocketService', 'Firebase'];
 
-    function MainCtrl($scope, $timeout, SocketService) {
+    function MainCtrl($scope, $log, $rootScope, $timeout, SocketService, Firebase) {
       var vm;
 
       vm = this;
 
-      vm.init = initFirebase();
-      vm.database = {
-        'set': set
-      };
-
+      vm.signUp = userSignUp;
       vm.submitForm = submitForm;
 
+      vm.listenDb = listenDb;
+
       vm.form = {};
+      vm.message;
 
       vm.chat_logs = [];
       vm.system_logs = [];
 
+      Init();
+
       // ====
 
-      function initFirebase() {
-        var config, database;
+      function Init() {
+        Firebase.init();
+        vm.socket = SocketService.init();
 
-        config = {
-          apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
-          authDomain: "realtime-chatapp.firebaseapp.com",
-          databaseURL: "https://realtime-chatapp.firebaseio.com",
-          storageBucket: "realtime-chatapp.appspot.com",
-        };
-
-        firebase.initializeApp(config);
-        database = firebase.database();
-
-        vm.chat_log = firebase.database().ref('chat_log');
-        vm.system_log = firebase.database().ref('system_log');
-        vm.socket = io();
-
-        listenDb();
-        listeners();
+        initDb();
+        listenSocket()
       }
 
-      function listenDb() {
-        vm.chat_log.on('value', function(snapshot) {
-          $timeout(function() {
-            $scope.$apply(function() {
-              vm.chat_logs = snapshot.val();
-            })
-          }, 10);
-        });
+      function initDb() {
+        var chat_log, system_log, user_entry;
 
-        vm.system_log.on('value', function(snapshot) {
-          $timeout(function() {
-            $scope.$apply(function() {
-              vm.system_logs = snapshot.val();
-            })
-          }, 10);
+        chat_log = Firebase.setDb('chat_log');
+        system_log = Firebase.setDb('system_log');
+        user_entry = Firebase.setDb('user_entry');
+
+        vm.listenDb(chat_log);
+        vm.listenDb(system_log);
+        vm.listenDb(user_entry);
+      }
+
+      function listenDb(db) {
+        Firebase.listenDb(db, function(result) {
+          $log.warn('db -> ', result);
         });
       }
 
-      function listeners() {
-        vm.socket.on('chat message', function(msg) {
-          vm.database.set('chat_log', msg, 'chat');
+      function listenSocket() {
+        vm.socket.on('user:message', function(data) {
+          Firebase.setItem('chat_log', data);
         });
 
-        vm.socket.on('user disconnect', function(msg) {
-          vm.database.set('system_log', msg, 'log');
+        vm.socket.on('user:user_data', function(data) {
+          Firebase.setItem('user_entry', data);
         });
 
-        vm.socket.on('user connected', function(msg) {
-          vm.database.set('system_log', msg, 'log');
+        vm.socket.on('guest:disconnect', function(data) {
+          Firebase.setItem('system_log', data);
+        });
+
+        vm.socket.on('guest:connected', function(data) {
+          Firebase.setItem('system_log', data);
         });
       }
 
-      function set(db, data, type) {
+      function userSignUp() {
         var obj;
 
-        // check the type of insertion
-        if (type === 'chat') {
-          obj = {
-            'username': data.name,
-            'message': data.msg,
-            'event': data.event,
-            'timestamp': new Date().getTime()
-          }
-        } else {
-          obj = {
-            'message': data
-          }
-        }
+        obj = {
+          'event': vm.form.event,
+          'username': vm.form.username,
+          'timestamp': new Date().getTime()
+        };
 
-        firebase
-        .database()
-        .ref(db)
-        .push(obj)
-        .then(function(data) {
-          console.info('rolou alteração!');
-        }, function(err) {
-          console.warn('deu erro na inserção! ', err);
-        });
+        vm.socket.emit('user:sign_up', obj);
       }
 
       function submitForm() {
-        console.warn('vm.form -> ', SocketService.get());
-        // vm.socket.emit('send message', vm.form);
+        var obj;
+
+        obj = {
+          'event': vm.form.event,
+          'username': vm.form.username,
+          'message': vm.message,
+          'timestamp': new Date().getTime()
+        };
+
+        vm.socket.emit('user:send_message', obj);
       }
     }
 

@@ -19,19 +19,42 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-  var msg = 'user connected at ' + new Date();
-  io.emit('user connected', msg);
+
+  // quando um socket é conectado
+  var msgObj;
+
+  msg = {
+    'timestamp': new Date().getTime(),
+    'username': 'Guest'
+  };
+
+  io.emit('guest:connected', msg);
+  // ====
 
   // quando um socket é desconectado
   socket.on('disconnect', function() {
-    var msg = 'user disconnected at ' + new Date();
-    io.emit('user disconnect', msg);
+    var msgObj;
+
+    msgObj = {
+      'timestamp': new Date().getTime(),
+      'username': 'Guest'
+    };
+
+    io.emit('guest:disconnect', msgObj);
   });
+  // ====
+
+  // recebendo o evento de usuário
+  socket.on('user:sign_up', function(userData){
+    io.emit('user:user_data', userData);
+  });
+  // ====
 
   // recebendo o evento de chat message
-  socket.on('send message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('user:send_message', function(msg){
+    io.emit('user:message', msg);
   });
+  // ====
 });
 
 http.listen(3000, function() {
