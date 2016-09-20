@@ -22,11 +22,14 @@
       vm = this;
 
       vm.submitForm = submitForm;
+      vm.listenDb = listenDb;
 
       vm.form = {};
 
       vm.chat_logs = [];
       vm.system_logs = [];
+
+      vm.socket;
 
       Init();
 
@@ -34,44 +37,42 @@
 
       function Init() {
         Firebase.init();
+        vm.socket = SocketService.init();
+
         initDb();
+        listenSocket()
       }
 
       function initDb() {
-        $log.info('initDb');
-
         var chat_log, system_log;
 
         chat_log = Firebase.setDb('chat_log');
         system_log = Firebase.setDb('system_log');
 
-        Firebase.listenDb(chat_log, function(result) {
-          $log.warn('chat_log -> ', result);
-        });
-
-        Firebase.listenDb(system_log, function(result) {
-          $log.warn('system_log -> ', result);
-        });
-
-        return;
-
-        SocketService.init();
-        listeners();
+        vm.listenDb(chat_log);
+        vm.listenDb(system_log);
       }
 
-      function listeners() {
-        $log.info('listeners');
+      function listenDb(db) {
+        Firebase.listenDb(db, function(result) {
+          $log.warn('db -> ', result);
+        });
+      }
 
+      function listenSocket() {
         vm.socket.on('chat message', function(msg) {
-          vm.database.set('chat_log', msg, 'chat');
+          $log.warn('chat message -> ', msg);
+          // vm.database.set('chat_log', msg, 'chat');
         });
 
         vm.socket.on('user disconnect', function(msg) {
-          vm.database.set('system_log', msg, 'log');
+          $log.warn('user disconnect -> ', msg);
+          // vm.database.set('system_log', msg, 'log');
         });
 
         vm.socket.on('user connected', function(msg) {
-          vm.database.set('system_log', msg, 'log');
+          $log.warn('user connected -> ', msg);
+          // vm.database.set('system_log', msg, 'log');
         });
       }
 
