@@ -18,7 +18,7 @@
     }
 
     function init() {
-      return io.connect();
+      return io();
     }
   }
 
