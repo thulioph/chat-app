@@ -8,13 +8,16 @@ var fileObj = {
   root: path.join(__dirname, '../client/dist/')
 };
 
-var server = express().use(function(req, res) {
+var server = express();
+
+server.use(express.static('../client/dist/'));
+
+server.use(function(req, res) {
   res.sendFile('index.html', fileObj);
 }).listen(port, function() {
   console.log('listening on port: ', port);
 });
 
-server.use(express.static('../client/dist/'));
 
 var io = socketIo(server);
 
