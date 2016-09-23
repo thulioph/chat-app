@@ -18,7 +18,7 @@
     }
 
     function init() {
-      return io.connect('http://realtime-chatapp.herokuapp.com');
+      return io.connect();
     }
   }
 
