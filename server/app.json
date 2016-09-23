@@ -1,0 +1,8 @@
+{
+  "name": "Real-Time chat app for questions during talks.",
+  "description": "Real-Time chat app for questions during talks.",
+  "repository": "https://github.com/thulioph/realtime-chatapp",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
+}
