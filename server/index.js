@@ -11,8 +11,8 @@ var fileObj = {
 
 var app = express();
 
-app.use('/styles', express.static('../client/dist/styles'));
-app.use('/scripts', express.static('../client/dist/scripts'));
+app.use('/styles', express.static(path.join(__dirname, '../client/dist/styles')));
+app.use('/scripts', express.static(path.join(__dirname, '../client/dist/scripts')));
 
 app.use(function(req, res) {
   res.sendFile('index.html', fileObj);
