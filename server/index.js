@@ -26,6 +26,8 @@ var io = socketIo(server);
 
 io.on('connection', function(socket) {
 
+  console.log('connection', socket);
+
   // quando um socket é conectado
   var msgObj;
 
