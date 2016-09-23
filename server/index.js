@@ -5,7 +5,7 @@ var path = require('path');
 var port = process.env.PORT || 3000;
 
 var fileObj = {
-  root: path.join(__dirname, '/client/dist/')
+  root: path.join(__dirname, '../client/dist/')
 };
 
 var server = express().use(function(req, res) {
