@@ -1,22 +1,21 @@
-var express, app, http, path, io;
+var express = require('express');
+var socketIo = require('socket.io');
+var path = require('path');
 
-express = require('express');
-app = express();
-http = require('http').Server(app);
-path = require('path');
-io = require('socket.io')(http);
+var port = process.env.PORT || 3000;
+// var index = (path.join(__dirname, '/client/dist/'), 'index.html');
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+var fileObj = {
+  root: path.join(__dirname, '../client/dist/')
+};
 
-app.get('/', function(req, res) {
-  var fileObj;
-
-  fileObj = {
-    root: path.join(__dirname, '../client/dist/') // /public
-  };
-
+var server = express().use(function(req, res) {
   res.sendFile('index.html', fileObj);
+}).listen(port, function() {
+  console.log('listening on port: ', port);
 });
+
+var io = socketIo(server);
 
 io.on('connection', function(socket) {
 
@@ -55,8 +54,4 @@ io.on('connection', function(socket) {
     io.emit('user:message', msg);
   });
   // ====
-});
-
-http.listen(3000, function() {
-  console.log('Server is running on *:3000');
 });
