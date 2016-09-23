@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A sample real-time chat app for questions about talks.",
   "engines": {
-    "node": "5.9.1"
+    "node": "6.3.0"
   },
   "main": "index.js",
   "scripts": {
