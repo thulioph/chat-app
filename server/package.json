@@ -1,20 +1,28 @@
 {
-  "name": "server",
-  "version": "0.0.1",
-  "description": "server for my chat application.",
+  "name": "realtime-chatapp",
+  "version": "1.0.0",
+  "description": "A sample real-time chat app for questions about talks.",
+  "engines": {
+    "node": "5.9.1"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thulioph/realtime-chatapp"
   },
   "keywords": [
-    "server",
+    "node",
+    "express",
     "socket.io",
     "chat"
   ],
   "author": "Thulio Philipe",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.14.0",
-    "socket.io": "^1.4.8"
-  }
+  "license": "ISC"
 }
