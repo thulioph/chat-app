@@ -14,9 +14,7 @@ var server = express().use(function(req, res) {
   console.log('listening on port: ', port);
 });
 
-server.use('/styles', express.static(__dirname, '../client/dist/styles'));
-server.use('/scripts', express.static(__dirname, '../client/dist/scripts'));
-server.use('/images', express.static(__dirname, '../client/dist/images'));
+server.use(express.static('../client/dist/'));
 
 var io = socketIo(server);
 
