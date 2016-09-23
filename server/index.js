@@ -3,10 +3,9 @@ var socketIo = require('socket.io');
 var path = require('path');
 
 var port = process.env.PORT || 3000;
-// var index = (path.join(__dirname, '/client/dist/'), 'index.html');
 
 var fileObj = {
-  root: path.join(__dirname, '../client/dist/')
+  root: path.join(__dirname, '/client/dist/')
 };
 
 var server = express().use(function(req, res) {
