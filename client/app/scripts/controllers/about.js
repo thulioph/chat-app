@@ -60,10 +60,14 @@
     }
   }
 
+  AboutCtrl.$inject = [
+    '$rootScope',
+    '$location',
+    'SocketService'
+  ];
+
   angular
   .module('chatAppApp')
   .controller('AboutCtrl', AboutCtrl);
-
-  AboutCtrl.$inject = ['$rootScope', '$location', 'SocketService'];
 
 })();

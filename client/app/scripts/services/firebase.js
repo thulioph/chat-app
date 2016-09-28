@@ -56,7 +56,12 @@
     }
   }
 
-  Firebase.$inject = ['$firebaseObject', '$log', '$rootScope', '$timeout'];
+  Firebase.$inject = [
+    '$firebaseObject',
+    '$log',
+    '$rootScope',
+    '$timeout'
+  ];
 
   angular
   .module('chatAppApp')

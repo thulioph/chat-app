@@ -106,10 +106,17 @@
     }
   }
 
+  MainCtrl.$inject = [
+    '$scope',
+    '$log',
+    '$rootScope',
+    '$timeout',
+    'SocketService',
+    'Firebase'
+  ];
+
   angular
   .module('chatAppApp')
   .controller('MainCtrl', MainCtrl);
-
-  MainCtrl.$inject = ['$scope', '$log', '$rootScope', '$timeout', 'SocketService', 'Firebase'];
 
 })();
