@@ -1,66 +1,49 @@
-var express = require('express');
-var socketIo = require('socket.io');
-var path = require('path');
-var http = require('http');
+var express, app, http, io;
 
-var port = process.env.PORT || 3000;
+express = require('express');
+app = express();
+http = require('http').Server(app);
+io = require('socket.io')(http);
 
-var fileObj = {
-  root: path.join(__dirname, '../client/dist/')
-};
+// app.use(express.static(__dirname + '/../client/dist'));
 
-var app = express();
-
-app.use('/styles', express.static(path.join(__dirname, '../client/dist/styles')));
-app.use('/scripts', express.static(path.join(__dirname, '../client/dist/scripts')));
-
-app.use(function(req, res) {
-  res.sendFile('index.html', fileObj);
-}).listen(port, function() {
-  console.log('listening on port: ', port);
+app.get('/', function(req, res) {
+  // res.sendFile(__dirname + '/../client/dist/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
-var server = http.createServer(app);
-
-var io = socketIo(server);
-
-io.on('connection', function(socket) {
-
-  console.log('connection', socket);
-
-  // quando um socket é conectado
+// Gerenciando eventos
+io.on('connection', function(socket){
   var msgObj;
 
-  msg = {
+  msgObj = {
     'timestamp': new Date().getTime(),
     'username': 'Guest'
   };
 
-  io.emit('guest:connected', msg);
-  // ====
+  // quando um usuário se conectar
+  io.emit('guest_connected', msgObj)
 
-  // quando um socket é desconectado
+
+  // quando um usuário se desconectar
   socket.on('disconnect', function() {
-    var msgObj;
+    var obj;
 
-    msgObj = {
+    obj = {
       'timestamp': new Date().getTime(),
       'username': 'Guest'
     };
 
-    io.emit('guest:disconnect', msgObj);
+    io.emit('guest_disconnect', obj);
   });
-  // ====
 
-  // recebendo o evento de usuário
-  socket.on('user:sign_up', function(userData){
-    io.emit('user:user_data', userData);
-  });
-  // ====
 
-  // recebendo o evento de chat message
-  socket.on('user:send_message', function(msg){
-    io.emit('user:message', msg);
+  // quando um usuário escrever uma mensagem
+  socket.on('chat message', function(msg) {
+    io.emit('chat_message', msg);
   });
-  // ====
+});
+
+http.listen(3000, function() {
+  console.log('Server is running on *:3000');
 });

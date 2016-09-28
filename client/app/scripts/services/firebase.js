@@ -43,7 +43,7 @@
       db.on('value', function(snapshot) {
         $timeout(function() {
           return callback(snapshot.val())
-        }, 10);
+        }, 0);
       });
     }
 
@@ -56,7 +56,12 @@
     }
   }
 
-  Firebase.$inject = ['$firebaseObject', '$log', '$rootScope', '$timeout'];
+  Firebase.$inject = [
+    '$firebaseObject',
+    '$log',
+    '$rootScope',
+    '$timeout'
+  ];
 
   angular
   .module('chatAppApp')
