@@ -48,10 +48,22 @@
 
       socket.on('guest_connected', function(obj) {
         console.log('DALE -> ', obj);
+
+        var element, user;
+        element = $('<li>');
+        user = $('<span>').text(obj.username + ' entrou!.');
+        (element).append(user);
+        $('#messages').append(element);
       });
 
       socket.on('guest_disconnect', function(obj) {
         console.log('DALE 2 -> ', obj);
+
+        var element, user;
+        element = $('<li>');
+        user = $('<span>').text(obj.username + ' saiu!');
+        (element).append(user);
+        $('#messages').append(element);
       });
 
       socket.on('chat_message', function(data){
