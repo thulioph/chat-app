@@ -93,13 +93,15 @@
       var obj;
 
       obj = {
-        'event': vm.form.event,
-        'username': vm.form.username,
+        'event': vm.user.event,
+        'username': vm.user.username,
         'message': vm.message,
         'timestamp': new Date().getTime()
       };
 
-      vm.socket.emit('user:send_message', obj);
+      console.log('DALE -> ', obj);
+      vm.message = '';
+      // vm.socket.emit('user:send_message', obj);
     }
   }
 
