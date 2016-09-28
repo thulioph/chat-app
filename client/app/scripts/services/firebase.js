@@ -43,7 +43,7 @@
       db.on('value', function(snapshot) {
         $timeout(function() {
           return callback(snapshot.val())
-        }, 10);
+        }, 0);
       });
     }
 
