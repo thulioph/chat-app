@@ -15,7 +15,6 @@
 
     vm = this;
 
-    vm.signUp = userSignUp;
     vm.submitForm = submitForm;
 
     vm.listenDb = listenDb;
@@ -35,25 +34,26 @@
 
       vm.user = $rootScope.user;
 
-      // vm.socket = SocketService.init();
+      vm.socket = SocketService.init();
 
-      // initDb();
-      // listenSocket()
+      initDb();
+      listenSocket();
     }
 
     function initDb() {
       var chat_log, system_log, user_entry;
 
-      chat_log = Firebase.setDb('chat_log');
-      system_log = Firebase.setDb('system_log');
+      // chat_log = Firebase.setDb('chat_log');
+      // system_log = Firebase.setDb('system_log');
       user_entry = Firebase.setDb('user_entry');
 
-      vm.listenDb(chat_log);
-      vm.listenDb(system_log);
+      // vm.listenDb(chat_log);
+      // vm.listenDb(system_log);
       vm.listenDb(user_entry);
     }
 
     function listenDb(db) {
+      // a cada alteração no banco, exibo aqui!
       Firebase.listenDb(db, function(result) {
         $log.warn('db -> ', result);
       });
@@ -64,8 +64,9 @@
         Firebase.setItem('chat_log', data);
       });
 
-      vm.socket.on('user:user_data', function(data) {
-        Firebase.setItem('user_entry', data);
+      vm.socket.on('novo_usuario', function(data) {
+        console.log('novo_usuario');
+        // Firebase.setItem('user_entry', data);
       });
 
       vm.socket.on('guest:disconnect', function(data) {
