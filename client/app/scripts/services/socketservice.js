@@ -10,7 +10,7 @@
    * Factory in the chatAppApp.
    */
 
-  function SocketService($log) {
+  function SocketService($rootScope) {
     var SocketService;
 
     return SocketService = {
@@ -21,10 +21,12 @@
 
     function init() {
       return io();
+
+      $rootScope.socket_init = true;
     }
   }
 
-  SocketService.$inject = [];
+  SocketService.$inject = ['$rootScope'];
 
   angular
   .module('chatAppApp')

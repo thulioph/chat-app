@@ -33,6 +33,8 @@
       };
 
       firebase.initializeApp(config);
+
+      $rootScope.firebase_init = true;
     }
 
     function setDataBase(db) {
@@ -41,9 +43,7 @@
 
     function listenDatabase(db, callback) {
       db.on('value', function(snapshot) {
-        $timeout(function() {
-          return callback(snapshot.val())
-        }, 0);
+        return callback(snapshot.val())
       });
     }
 

@@ -30,26 +30,31 @@
     // ====
 
     function Init() {
-      Firebase.init();
-
       vm.user = $rootScope.user;
 
-      vm.socket = SocketService.init();
+      // checa se o socket já foi iniciado
+      if (!$rootScope.socket_init) {
+        vm.socket = SocketService.init();
+      }
+
+      listenSocket();
+
+      // checa se o firebase já foi iniciado
+      if (!$rootScope.firebase_init) {
+        Firebase.init();
+      }
 
       initDb();
-      listenSocket();
     }
 
     function initDb() {
-      var chat_log, system_log, user_entry;
+      var chat_log, system_log;
 
       // chat_log = Firebase.setDb('chat_log');
-      // system_log = Firebase.setDb('system_log');
-      user_entry = Firebase.setDb('user_entry');
+      system_log = Firebase.setDb('system_log');
 
       // vm.listenDb(chat_log);
-      // vm.listenDb(system_log);
-      vm.listenDb(user_entry);
+      vm.listenDb(system_log);
     }
 
     function listenDb(db) {
@@ -64,16 +69,11 @@
         Firebase.setItem('chat_log', data);
       });
 
-      vm.socket.on('novo_usuario', function(data) {
-        console.log('novo_usuario');
-        // Firebase.setItem('user_entry', data);
-      });
-
-      vm.socket.on('guest:disconnect', function(data) {
+      vm.socket.on('guest_connected', function(data) {
         Firebase.setItem('system_log', data);
       });
 
-      vm.socket.on('guest:connected', function(data) {
+      vm.socket.on('guest_disconnect', function(data) {
         Firebase.setItem('system_log', data);
       });
     }

@@ -3,14 +3,67 @@
   <head>
     <title>Socket.IO chat</title>
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+      body {
+        font: 13px Helvetica, Arial;
+      }
+
+      form {
+        background: #000;
+        padding: 3px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      form input {
+        border: 0;
+        padding: 10px;
+        width: 90%;
+        margin-right: .5%;
+      }
+
+      form button {
+        width: 9%;
+        background: rgb(130, 224, 255);
+        border: none;
+        padding: 10px;
+      }
+
+      #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #messages li {
+        padding: 5px 10px;
+        display: block;
+        min-height: 45px;
+      }
+
+      .msg-area {
+        float: left;
+      }
+
+      .date {
+        float: right;
+        margin-top: 10px;
+      }
+
+      .message {
+        clear: both;
+        display: block;
+      }
+
+      #messages li:nth-child(odd) {
+        background: #eee;
+      }
     </style>
   </head>
 
@@ -35,7 +88,8 @@
 
         obj = {
           'user': $('#user').val(),
-          'msg': $('#msg').val()
+          'msg': $('#msg').val(),
+          'timestamp': new Date().getTime()
         };
 
         socket.emit('chat message', obj);
@@ -47,38 +101,41 @@
       });
 
       socket.on('guest_connected', function(obj) {
-        console.log('DALE -> ', obj);
-
-        var element, user;
-        element = $('<li>');
-        user = $('<span>').text(obj.username + ' entrou!.');
-        (element).append(user);
-        $('#messages').append(element);
+        _buildLog(obj);
       });
 
       socket.on('guest_disconnect', function(obj) {
-        console.log('DALE 2 -> ', obj);
-
-        var element, user;
-        element = $('<li>');
-        user = $('<span>').text(obj.username + ' saiu!');
-        (element).append(user);
-        $('#messages').append(element);
+        _buildLog(obj);
       });
 
-      socket.on('chat_message', function(data){
-        var element, user, msg;
-
-        element = $('<li>');
-
-        user = $('<span>').text(data.user);
-        msg = $('<p>').text(data.msg);
-
-        (element).append(user);
-        (element).append(msg);
-
-        $('#messages').append(element);
+      socket.on('new_user', function(obj) {
+        _buildLog(obj);
       });
+
+      socket.on('chat_message', function(obj){
+        _buildLog(obj);
+      });
+
+      function _buildLog(obj) {
+        console.log(obj);
+
+       var li, div, h4, p, date;
+
+        li = $('<li>');
+        div = $('<div class="msg-area">');
+
+        h4 = $('<h4 class="user">').text(obj.user);
+        p = $('<p class="message">').text(obj.msg);
+        date = $('<span class="date">').text(obj.timestamp);
+
+        (li).append(div);
+        (li).append(date);
+
+        (div).append(h4);
+        (div).append(p);
+
+        $('#messages').append(li);
+      }
     </script>
 
   </body>

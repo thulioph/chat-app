@@ -14,11 +14,13 @@ app.get('/', function(req, res) {
 
 // Gerenciando eventos
 io.on('connection', function(socket){
+  console.info('O servidor ouviu o evento de connection.');
+
   var msgObj;
 
   msgObj = {
     'timestamp': new Date().getTime(),
-    'username': 'Guest'
+    'msg': 'Um usuário entrou.'
   };
 
   // quando um usuário se conectar
@@ -27,11 +29,13 @@ io.on('connection', function(socket){
 
   // quando um usuário se desconectar
   socket.on('disconnect', function() {
+    console.info('O servidor ouviu o evento de disconnect.');
+
     var obj;
 
     obj = {
       'timestamp': new Date().getTime(),
-      'username': 'Guest'
+      'msg': 'Um usuário saiu.'
     };
 
     io.emit('guest_disconnect', obj);
@@ -40,8 +44,15 @@ io.on('connection', function(socket){
 
   // quando um usuário escrever uma mensagem
   socket.on('chat message', function(msg) {
+    console.info('O servidor ouviu o evento de chat_message.');
     io.emit('chat_message', msg);
   });
+
+  // quando um novo usuário entrar
+  socket.on('novo_usuario', function(obj) {
+    console.info('O servidor ouviu o evento de novo_usuario.');
+    io.emit('new_user', obj);
+  })
 });
 
 http.listen(3000, function() {
