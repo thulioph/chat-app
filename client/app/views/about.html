@@ -1,1 +1,47 @@
-<p>This is the about view.</p>
+<div
+  ng-include
+  src="'views/templates/header.tmpl.html'">
+</div>
+
+<!-- Sign up -->
+<form class="form-area">
+  <fieldset class="form-group col-sm-4">
+    <label for="name">Nome</label>
+    <input
+      class="form-control"
+      type="text"
+      id="name"
+      ng-model="vm.form.username"
+      placeholder="Nome">
+  </fieldset>
+
+  <fieldset class="form-group col-sm-4">
+    <label for="event">Evento</label>
+    <input
+      class="form-control"
+      type="text"
+      id="event"
+      ng-model="vm.form.event"
+      placeholder="Qual evento você está?">
+  </fieldset>
+
+  <fieldset class="form-group col-sm-4">
+    <label for="guest">Convidado</label>
+    <input
+      id="guest"
+      type="checkbox"
+      class="form-control"
+      ng-model="vm.form.guest">
+  </fieldset>
+
+  <fieldset class="form-group col-sm-12">
+    <label for="">&nbsp</label>
+    <button class="btn btn-success btn-block" ng-click="vm.signUp()">Entrar</button>
+  </fieldset>
+</form>
+
+<!-- Fork button -->
+<div
+  ng-include
+  src="'views/templates/fork-button.tmpl.html'">
+</div>
