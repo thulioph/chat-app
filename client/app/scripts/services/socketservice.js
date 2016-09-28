@@ -17,15 +17,17 @@
       'init': init
     }
 
+    // ====
+
     function init() {
       return io();
     }
   }
 
-  SocketService.$inject = ['$log'];
+  SocketService.$inject = [];
 
   angular
   .module('chatAppApp')
-  .factory('SocketService', SocketService);
+  .service('SocketService', SocketService);
 
 })();

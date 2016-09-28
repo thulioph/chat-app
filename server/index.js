@@ -1,60 +1,47 @@
-var express, app, http, path, io;
+var express, app, http, io;
 
 express = require('express');
 app = express();
 http = require('http').Server(app);
-path = require('path');
 io = require('socket.io')(http);
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+// app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/', function(req, res) {
-  var fileObj;
-
-  fileObj = {
-    root: path.join(__dirname, '../client/dist/') // /public
-  };
-
-  res.sendFile('index.html', fileObj);
+  // res.sendFile(__dirname + '/../client/dist/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
-io.on('connection', function(socket) {
-
-  // quando um socket é conectado
+// Gerenciando eventos
+io.on('connection', function(socket){
   var msgObj;
 
-  msg = {
+  msgObj = {
     'timestamp': new Date().getTime(),
     'username': 'Guest'
   };
 
-  io.emit('guest:connected', msg);
-  // ====
+  // quando um usuário se conectar
+  io.emit('guest_connected', msgObj)
 
-  // quando um socket é desconectado
+
+  // quando um usuário se desconectar
   socket.on('disconnect', function() {
-    var msgObj;
+    var obj;
 
-    msgObj = {
+    obj = {
       'timestamp': new Date().getTime(),
       'username': 'Guest'
     };
 
-    io.emit('guest:disconnect', msgObj);
+    io.emit('guest_disconnect', obj);
   });
-  // ====
 
-  // recebendo o evento de usuário
-  socket.on('user:sign_up', function(userData){
-    io.emit('user:user_data', userData);
-  });
-  // ====
 
-  // recebendo o evento de chat message
-  socket.on('user:send_message', function(msg){
-    io.emit('user:message', msg);
+  // quando um usuário escrever uma mensagem
+  socket.on('chat message', function(msg) {
+    io.emit('chat_message', msg);
   });
-  // ====
 });
 
 http.listen(3000, function() {
