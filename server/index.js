@@ -5,10 +5,7 @@ app = express();
 http = require('http').Server(app);
 io = require('socket.io')(http);
 
-// app.use(express.static(__dirname + '/../client/dist'));
-
 app.get('/', function(req, res) {
-  // res.sendFile(__dirname + '/../client/dist/index.html');
   res.sendFile(__dirname + '/public/index.html');
 });
 
