@@ -66,7 +66,6 @@
       }
     </style>
   </head>
-
   <body>
     <ul id="messages"></ul>
 
@@ -77,11 +76,17 @@
       <button>Send</button>
     </form>
 
+    <!-- Libs -->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
 
+
+    <!-- Custom -->
     <script>
-      var socket = io();
+      var socket, chat_log, system_log, config;
+
+      socket = io();
 
       $('form').submit(function(){
         var obj;
@@ -100,20 +105,28 @@
         return false;
       });
 
+      //
+      // Socket
+      //
+
       socket.on('guest_connected', function(obj) {
         _buildLog(obj);
+        SetDataIntoDB(system_log, obj);
       });
 
       socket.on('guest_disconnect', function(obj) {
         _buildLog(obj);
+        SetDataIntoDB(system_log, obj);
       });
 
       socket.on('new_user', function(obj) {
         _buildLog(obj);
+        SetDataIntoDB(system_log, obj);
       });
 
       socket.on('chat_message', function(obj){
         _buildLog(obj);
+        SetDataIntoDB(chat_log, obj);
       });
 
       function _buildLog(obj) {
@@ -136,7 +149,54 @@
 
         $('#messages').append(li);
       }
-    </script>
 
+      //
+      // Firebase
+      //
+
+      InitFirebase();
+
+      function InitFirebase() {
+        config = {
+          apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
+          authDomain: "realtime-chatapp.firebaseapp.com",
+          databaseURL: "https://realtime-chatapp.firebaseio.com",
+          storageBucket: "realtime-chatapp.appspot.com",
+        };
+
+        firebase.initializeApp(config);
+
+        // ====
+
+        chat_log = SetDatabase('chat_log');
+        system_log = SetDatabase('system_log');
+
+        // ====
+
+        chat_log.on('value', function(snapshot) {
+          console.info('chat_log');
+          console.warn(snapshot.val());
+        });
+
+        system_log.on('value', function(snapshot) {
+          console.info('system_log');
+          console.warn(snapshot.val());
+        });
+      }
+
+      function SetDatabase(db) {
+        return firebase.database().ref(db);
+      }
+
+      function SetDataIntoDB(db, obj) {
+        db.push(obj).then(function(result) {
+          console.info(result);
+          return result;
+        }, function(err) {
+          console.error(err);
+          return err;
+        });
+      }
+    </script>
   </body>
 </html>
