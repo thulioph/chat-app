@@ -10,22 +10,26 @@
    * Factory in the chatAppApp.
    */
 
-  function SocketService($log) {
+  function SocketService($rootScope) {
     var SocketService;
 
     return SocketService = {
       'init': init
     }
 
+    // ====
+
     function init() {
       return io();
+
+      $rootScope.socket_init = true;
     }
   }
 
-  SocketService.$inject = ['$log'];
+  SocketService.$inject = ['$rootScope'];
 
   angular
   .module('chatAppApp')
-  .factory('SocketService', SocketService);
+  .service('SocketService', SocketService);
 
 })();
