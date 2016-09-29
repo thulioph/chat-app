@@ -33,6 +33,8 @@
       };
 
       firebase.initializeApp(config);
+
+      $rootScope.firebase_init = true;
     }
 
     function setDataBase(db) {
@@ -41,9 +43,7 @@
 
     function listenDatabase(db, callback) {
       db.on('value', function(snapshot) {
-        $timeout(function() {
-          return callback(snapshot.val())
-        }, 10);
+        return callback(snapshot.val())
       });
     }
 
@@ -56,7 +56,12 @@
     }
   }
 
-  Firebase.$inject = ['$firebaseObject', '$log', '$rootScope', '$timeout'];
+  Firebase.$inject = [
+    '$firebaseObject',
+    '$log',
+    '$rootScope',
+    '$timeout'
+  ];
 
   angular
   .module('chatAppApp')

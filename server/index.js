@@ -1,66 +1,60 @@
-var express = require('express');
-var socketIo = require('socket.io');
-var path = require('path');
-var http = require('http');
+var express, app, http, io, port;
 
-var port = process.env.PORT || 3000;
+express = require('express');
+app = express();
+http = require('http').Server(app);
+io = require('socket.io')(http);
+port = process.env.PORT || 3000;
 
-var fileObj = {
-  root: path.join(__dirname, '../client/dist/')
-};
-
-var app = express();
-
-app.use('/styles', express.static(path.join(__dirname, '../client/dist/styles')));
-app.use('/scripts', express.static(path.join(__dirname, '../client/dist/scripts')));
-
-app.use(function(req, res) {
-  res.sendFile('index.html', fileObj);
-}).listen(port, function() {
-  console.log('listening on port: ', port);
+// servindo os arquivos
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
-var server = http.createServer(app);
+// Gerenciando eventos
+io.on('connection', function(socket){
+  console.info('O servidor ouviu o evento de connection.');
 
-var io = socketIo(server);
-
-io.on('connection', function(socket) {
-
-  console.log('connection', socket);
-
-  // quando um socket é conectado
   var msgObj;
 
-  msg = {
+  msgObj = {
     'timestamp': new Date().getTime(),
-    'username': 'Guest'
+    'msg': 'Um usuário entrou.'
   };
 
-  io.emit('guest:connected', msg);
-  // ====
+  // quando um usuário se conectar
+  io.emit('guest_connected', msgObj)
 
-  // quando um socket é desconectado
+
+  // quando um usuário se desconectar
   socket.on('disconnect', function() {
-    var msgObj;
+    console.info('O servidor ouviu o evento de disconnect.');
 
-    msgObj = {
+    var obj;
+
+    obj = {
       'timestamp': new Date().getTime(),
-      'username': 'Guest'
+      'msg': 'Um usuário saiu.'
     };
 
-    io.emit('guest:disconnect', msgObj);
+    io.emit('guest_disconnect', obj);
   });
-  // ====
 
-  // recebendo o evento de usuário
-  socket.on('user:sign_up', function(userData){
-    io.emit('user:user_data', userData);
-  });
-  // ====
 
-  // recebendo o evento de chat message
-  socket.on('user:send_message', function(msg){
-    io.emit('user:message', msg);
+  // quando um usuário escrever uma mensagem
+  socket.on('chat message', function(msg) {
+    console.info('O servidor ouviu o evento de chat_message.');
+    io.emit('chat_message', msg);
   });
-  // ====
+
+  // quando um novo usuário entrar
+  socket.on('novo_usuario', function(obj) {
+    console.info('O servidor ouviu o evento de novo_usuario.');
+    io.emit('new_user', obj);
+  })
+});
+
+// levantando o server
+http.listen(port, function() {
+  console.log('Server is running on *:3000');
 });
