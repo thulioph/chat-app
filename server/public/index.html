@@ -10,12 +10,21 @@
         transition: background-color .25s linear;
       }
 
-      body.online {
-        background-color: rgba(255, 255, 255, 1);
-      }
-
       body.offline {
         background-color: rgba(0, 0, 0, .2);
+      }
+
+      body.dark {
+        background-color: #000000;
+        color: #ffffff;
+      }
+
+      body.dark form {
+        background-color: #ffffff;
+      }
+
+      body.dark button {
+        background-color: yellow;
       }
 
       * {
@@ -222,13 +231,16 @@
 
       network = true;
 
-      function ChangeNetwork(e) {
-        console.info(e.timeStamp);
+      function ChangeNetwork(event) {
+        console.info(event.timeStamp);
 
-        status = navigator.onLine ? "online" : "offline";
+        status = navigator.onLine ? 'online' : 'offline';
 
-        document.getElementsByTagName('body')[0].setAttribute('class', '');
-        document.getElementsByTagName('body')[0].classList.add(status)
+        if (status != 'online') {
+          document.body.classList.add('offline');
+        } else {
+          document.body.classList.remove('offline');
+        }
       }
 
       window.addEventListener('online', ChangeNetwork);
@@ -240,11 +252,15 @@
       // Ambient Light Events
       //
 
-      function DeviceLight(e) {
-        if (e.value <= 10) {
-          console.log('Está escuro!')
+      function DeviceLight(event) {
+        var light;
+
+        light = event.value;
+
+        if (light <= 10) {
+          document.body.classList.add('dark');
         } else {
-          console.log('Está claro!');
+          document.body.classList.remove('dark');
         }
       }
 
