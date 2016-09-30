@@ -222,7 +222,9 @@
 
       network = true;
 
-      function ChangeNetwork() {
+      function ChangeNetwork(e) {
+        console.info(e.timeStamp);
+
         status = navigator.onLine ? "online" : "offline";
 
         document.getElementsByTagName('body')[0].setAttribute('class', '');
@@ -232,6 +234,21 @@
       window.addEventListener('online', ChangeNetwork);
       window.addEventListener('offline', ChangeNetwork);
       // ====
+
+
+      //
+      // Ambient Light Events
+      //
+
+      function DeviceLight(e) {
+        if (e.value <= 10) {
+          console.log('Está escuro!')
+        } else {
+          console.log('Está claro!');
+        }
+      }
+
+      window.addEventListener('devicelight', DeviceLight);
     </script>
   </body>
 </html>
