@@ -18,17 +18,17 @@ Antes de prosseguir com a instalação, certifique-se de que você tenha essas d
 Execute comandos nas duas pastas: `client` e `server`.
 
 #### client
-  ```shell
-    $ npm install
-    $ bower install --save
-    $ grunt serve
-  ```
+```shell
+  $ npm install
+  $ bower install --save
+  $ grunt serve
+```
 
 #### server
-  ```shell
-    $ npm install
-    $ node index.js
-  ```
+```shell
+  $ npm install
+  $ node index.js
+```
 
 
 ## Suporte
