@@ -3,9 +3,23 @@
 
 [![code](https://img.shields.io/badge/code-4.2.0-red.svg)](https://github.com/thulioph/realtime-chatapp/blob/master/client/Gruntfile.js) [![Code Climate](https://codeclimate.com/github/thulioph/realtime-chatapp/badges/gpa.svg)](https://codeclimate.com/github/thulioph/realtime-chatapp)
 
+
 ## Demo
 
 [Exemplo no Heroku](https://goo.gl/yrf94y)
+
+
+## Recursos
+
+#### web apis
+- [Navigator Online](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine)
+- [Ambient Light Events](https://developer.mozilla.org/en-US/docs/Web/API/Ambient_Light_Events)
+
+#### assets
+- [Socket.io](http://socket.io/)
+- [Firebase](https://firebase.google.com/)
+- [Express](http://expressjs.com/)
+
 
 ## Instalação
 
@@ -40,7 +54,6 @@ A aplicação deverá funcionar nos seguintes navegadores:
 | 53+ ✔ | ✘ | 49+ ✔ | ✘ | 40+ ✔ | 10+ ✔ |
 
 
-
 ## Melhorias
 
 1. Realize um fork do projeto.
@@ -48,6 +61,7 @@ A aplicação deverá funcionar nos seguintes navegadores:
 3. Commit suas alterações: `git commit -m 'Ajustes de typo'`.
 4. Realize um push para sua branch: `git push origin minha-branch`.
 5. Submeta um pull request.
+
 
 ## License
 
