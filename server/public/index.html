@@ -88,6 +88,7 @@
 
       socket = io();
 
+      // ====
       $('form').submit(function(){
         var obj;
 
@@ -104,6 +105,7 @@
 
         return false;
       });
+      // ====
 
       //
       // Socket
@@ -149,6 +151,7 @@
 
         $('#messages').append(li);
       }
+      // ====
 
       //
       // Firebase
@@ -197,6 +200,27 @@
           return err;
         });
       }
+      // ====
+
+
+      //
+      // Offline
+      //
+
+      var network, status;
+
+      network = true;
+
+      function ChangeNetwork() {
+        status = navigator.onLine ? "online" : "offline";
+
+        document.getElementsByTagName('body')[0].setAttribute('class', '');
+        document.getElementsByTagName('body')[0].classList.add(status)
+      }
+
+      window.addEventListener('online', ChangeNetwork);
+      window.addEventListener('offline', ChangeNetwork);
+      // ====
     </script>
   </body>
 </html>
