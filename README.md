@@ -3,6 +3,10 @@
 
 [![code](https://img.shields.io/badge/code-4.2.0-red.svg)](https://github.com/thulioph/realtime-chatapp/blob/master/client/Gruntfile.js)
 
+## Demo
+
+[Exemplo no Heroku](https://goo.gl/yrf94y)
+
 ## Instalação
 
 Antes de prosseguir com a instalação, certifique-se de que você tenha essas dependências instaladas na sua máquina:
