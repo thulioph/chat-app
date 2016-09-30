@@ -3,14 +3,25 @@
   <head>
     <title>Socket.IO chat</title>
     <style>
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
       body {
-        font: 13px Helvetica, Arial;
+        background-color: rgba(255, 255, 255, 1);
+        font-size: 14px;
+        font-family: Helvetica, Arial;
+        transition: background-color .25s linear;
+      }
+
+      body.online {
+        background-color: rgba(255, 255, 255, 1);
+      }
+
+      body.offline {
+        background-color: rgba(0, 0, 0, .2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       form {
