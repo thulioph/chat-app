@@ -36,15 +36,15 @@ form {
   width: 100%;
 }
 
-form input {
+form input, textarea {
   border: 0;
   padding: 10px;
-  width: 90%;
-  margin-right: .5%;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 form button {
-  width: 9%;
+  width: 100%;
   background: rgb(130, 224, 255);
   border: none;
   padding: 10px;
@@ -60,6 +60,10 @@ form button {
   padding: 5px 10px;
   display: block;
   min-height: 45px;
+}
+
+#msg {
+  height: 100px;
 }
 
 .msg-area {
