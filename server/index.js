@@ -1,20 +1,33 @@
-var express, app, http, io, port;
+var express, http, path, app, server;
 
 express = require('express');
-app = express();
-http = require('http').Server(app);
-io = require('socket.io')(http);
-port = process.env.PORT || 3000;
+http = require('http');
+path = require('path');
 
+app = express();
+app.set('port', process.env.PORT || 8899);
+
+app.use('/css', express.static(path.join(__dirname, '/public/css/')));
+app.use('/js', express.static(path.join(__dirname, '/public/js/')));
+
+server = http.createServer(app);
+
+io = require('socket.io').listen(server);
+
+//
 // servindo os arquivos
+//
+
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/views/index.html');
 });
 
-// Gerenciando eventos
-io.on('connection', function(socket){
-  console.info('O servidor ouviu o evento de connection.');
 
+//
+// Socket
+//
+
+io.on('connection', function(socket){
   var msgObj;
 
   msgObj = {
@@ -54,7 +67,11 @@ io.on('connection', function(socket){
   })
 });
 
-// levantando o server
-http.listen(port, function() {
-  console.log('Server is running on *:3000');
+
+//
+// Startando o server
+//
+
+server.listen(app.get('port'), function() {
+  console.log('Server is running on ', app.get('port'));
 });
