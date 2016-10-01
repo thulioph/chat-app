@@ -16,6 +16,7 @@
     vm = this;
 
     vm.submitForm = submitForm;
+    vm.logout = logout;
 
     vm.listenDb = listenDb;
 
@@ -25,7 +26,7 @@
     vm.chat_logs = [];
     vm.system_logs = [];
 
-    Init();
+    // Init();
 
     // ====
 
@@ -103,6 +104,10 @@
       console.log('DALE -> ', obj);
       vm.message = '';
       // vm.socket.emit('user:send_message', obj);
+    }
+
+    function logout() {
+      return history.back();
     }
   }
 

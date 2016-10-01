@@ -20,7 +20,7 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/main', {
+      .when('/chat/online', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'vm'
@@ -28,6 +28,11 @@ angular
       .when('/', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/chat', {
+        templateUrl: 'views/chat.html',
+        controller: 'ChatCtrl',
         controllerAs: 'vm'
       })
       .otherwise({

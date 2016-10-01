@@ -1,33 +1,33 @@
+<!-- Feeds -->
+<div
+  ng-include
+  src="'views/templates/feeds.tmpl.html'">
+</div>
+
+<!-- Form -->
 <aside ng-if="!guest">
   <form class="form-area">
     <fieldset class="form-group">
       <label for="msg">Mensagem</label>
+
       <textarea
-        class="form-control"
-        id="msg"
-        ng-model="vm.message"
-        placeholder="Mensagem">
+        class="form-control" rows="3"
+        id="msg" ng-model="vm.message">
       </textarea>
     </fieldset>
 
-    <fieldset class="form-group">
-      <button class="btn btn-primary" ng-click="vm.submitForm()">
-        Perguntar
-      </button>
-    </fieldset>
+    <button
+      class="btn btn-primary"
+      ng-click="vm.submitForm()">
+
+      Enviar
+    </button>
+
+    <button
+      class="btn btn-danger"
+      ng-click="vm.logout()">
+
+      Sair
+    </button>
   </form>
-</aside>
-
-<aside class="chat-feeds">
-  <div ng-repeat="event in vm.chat_logs track by event.timestamp">
-    <li>
-      <span>{{event.username}}</span>
-      <small>{{event.timestamp | date: "h:mma"}}</small>
-      <p>{{event.message}}</p>
-    </li>
-  </div>
-
-  <!-- <div ng-repeat="log in vm.system_logs">
-    <small>{{log.message}}</small>
-  </div> -->
 </aside>
