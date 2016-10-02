@@ -13,7 +13,6 @@
     vm.SocketListeners = SocketListeners;
 
     vm.InitFirebase = InitFirebase;
-    // vm.DatabaseListeners = DatabaseListeners;
 
     // ====
 
@@ -25,7 +24,6 @@
       vm.user_info = $rootScope.User;
 
       vm.messages = [];
-      vm.chats = [];
 
       vm.InitFirebase();
 
@@ -50,15 +48,17 @@
       vm.chat_log = Firebase.Create('logs'); // chat_log
       vm.system_log = Firebase.Create('system_log');
       vm.user_entry = Firebase.Create('user_entry');
+
+      FirebaseListeners();
     }
 
     function SocketListeners() {
       Socket.Listen(vm.socket, 'chat_message', function(data) {
-        console.warn(data);
+        $scope.$apply(function() {
+          vm.messages.push(data);
+        });
 
         Firebase.Set(vm.chat_log, data);
-
-        FirebaseListeners();
       });
 
       Socket.Listen(vm.socket, 'guest_connected', function(data) {
@@ -75,12 +75,9 @@
     }
 
     function FirebaseListeners() {
-      Firebase.Listen(vm.chat_log, 'value', function(result) {
-        $scope.$apply(function() {
-          vm.messages = result;
-        });
-
-        // console.info('OPA!', result);
+      Firebase.Listen(vm.chat_log, 'value', function(data) {
+        console.log(data);
+        // $scope.$apply(vm.messages.push(data));
       })
     }
 
