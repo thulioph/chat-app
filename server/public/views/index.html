@@ -11,71 +11,18 @@
   <body>
 
     <main layout="column" layout-align="space-around stretch">
-      <section ng-if="!User" class="login" ng-controller="LoginCtrl as vm">
-        <md-content flex layout-padding>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Nome</label>
-            <input ng-model="vm.user.name" type="text">
-          </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Evento</label>
-            <md-select ng-model="vm.user.event">
-              <md-option value="TDC Porto Alegre">
-                TDC Porto Alegre
-              </md-option>
-
-              <md-option value="GDG Tech-tour Caruaru">
-                GDG Tech-tour Caruaru
-              </md-option>
-            </md-select>
-          </md-input-container>
-
-          <md-button ng-click="vm.login()" class="md-raised md-primary">
-            Entrar
-          </md-button>
-        </md-content>
+      <section ng-if="!User">
+        <div
+          ng-include
+          src="'templates/login.tmpl.html'">
+        </div>
       </section>
 
-      <!-- Form and feeds -->
-      <section ng-if="User" class="main" ng-controller="MainCtrl as vm">
-        <md-toolbar class="md-primary">
-          <div class="md-tollbar-tools">
-            <h2 class="md-title">{{ ::vm.user_info.event }}</h2>
-            <h4 class="md-subhead">{{ ::vm.user_info.name }}</h4>
-          </div>
-        </md-toolbar>
-
-        <md-content flex layout-padding>
-          <md-list class="md-dense" flex>
-            <md-list-item class="md-2-line">
-              <img class="md-avatar"
-                src="http://dummyimage.com/100x100/4d494d/686a82.gif&text=user"
-                alt="user">
-
-              <div class="md-list-item-text" layout="column">
-                <h3>Juarez Filho</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, fugiat?</p>
-              </div>
-            </md-list-item>
-          </md-list>
-
-          <ul id="messages"></ul>
-
-          <form ng-submit="vm.SendMsg()">
-            <md-input-container class="md-icon-float md-block">
-              <label>mensagem</label>
-
-              <md-icon
-                md-svg-src="images/paper-plane.svg">
-              </md-icon>
-
-              <input ng-model="vm.message" type="text">
-            </md-input-container>
-          </form>
-        </md-content>
-
-
+      <section ng-if="User">
+        <div
+          ng-include
+          src="'templates/main.tmpl.html'">
+        </div>
       </section>
     </main>
 
@@ -105,9 +52,9 @@
     <script src="js/modules/app.js"></script>
     <script src="js/controllers/login.js"></script>
     <script src="js/controllers/main.js"></script>
+    <script src="js/services/socket.js"></script>
+    <script src="js/services/firebase.js"></script>
 
-    <script src="js/socket.js"></script>
-    <script src="js/firebase.js"></script>
     <script src="js/network.js"></script>
     <script src="js/light-events.js"></script>
   </body>

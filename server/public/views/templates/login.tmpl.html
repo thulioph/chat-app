@@ -1,0 +1,25 @@
+<div ng-controller="LoginCtrl as vm">
+  <md-content flex layout-padding>
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Nome</label>
+      <input ng-model="vm.user.name" type="text">
+    </md-input-container>
+
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Evento</label>
+      <md-select ng-model="vm.user.event">
+        <md-option value="TDC Porto Alegre">
+          TDC Porto Alegre
+        </md-option>
+
+        <md-option value="GDG Tech-tour Caruaru">
+          GDG Tech-tour Caruaru
+        </md-option>
+      </md-select>
+    </md-input-container>
+
+    <md-button ng-click="vm.login()" class="md-raised md-primary">
+      Entrar
+    </md-button>
+  </md-content>
+</div>
