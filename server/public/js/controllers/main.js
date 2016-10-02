@@ -17,12 +17,12 @@
     }
 
     function SendMessage() {
-      $log.info(vm.message);
-
       vm.user_info.message = vm.message;
       vm.user_info.timestamp = new Date().getTime();
 
       socket.emit('chat message', vm.user_info);
+
+      vm.message = '';
     }
   }
 
