@@ -3,53 +3,105 @@
   <head>
     <title>Real-time chat App</title>
 
-    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   </head>
   <body>
 
-    <!-- Login -->
-    <section class="login" ng-controller="LoginCtrl as vm">
-      <form>
-        <input type="text">
-      </form>
-    </section>
+    <main layout="column" layout-align="space-around stretch">
+      <section ng-if="!User" class="login" ng-controller="LoginCtrl as vm">
+        <md-content flex layout-padding>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nome</label>
+            <input ng-model="vm.user.name" type="text">
+          </md-input-container>
 
-    <!-- Form and feeds -->
-    <section class="main" ng-controller="MainCtrl as vm">
-      <ul id="messages"></ul>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Evento</label>
+            <md-select ng-model="vm.user.event">
+              <md-option value="TDC Porto Alegre">
+                TDC Porto Alegre
+              </md-option>
 
-      <form>
-        <input
-          id="user"
-          type="text"
-          placeholder="Nome">
+              <md-option value="GDG Tech-tour Caruaru">
+                GDG Tech-tour Caruaru
+              </md-option>
+            </md-select>
+          </md-input-container>
 
-        <br>
+          <md-button ng-click="vm.login()" class="md-raised md-primary">
+            Entrar
+          </md-button>
+        </md-content>
+      </section>
 
-        <textarea
-          id="msg"
-          placeholder="Mensagem">
-        </textarea>
+      <!-- Form and feeds -->
+      <section ng-if="User" class="main" ng-controller="MainCtrl as vm">
+        <md-toolbar class="md-primary">
+          <div class="md-tollbar-tools">
+            <h2 class="md-title">{{ ::vm.user_info.event }}</h2>
+            <h4 class="md-subhead">{{ ::vm.user_info.name }}</h4>
+          </div>
+        </md-toolbar>
 
-        <button>Send</button>
-      </form>
-    </section>
+        <md-content flex layout-padding>
+          <md-list class="md-dense" flex>
+            <md-list-item class="md-2-line">
+              <img class="md-avatar"
+                src="http://dummyimage.com/100x100/4d494d/686a82.gif&text=user"
+                alt="user">
+
+              <div class="md-list-item-text" layout="column">
+                <h3>Juarez Filho</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, fugiat?</p>
+              </div>
+            </md-list-item>
+          </md-list>
+
+          <ul id="messages"></ul>
+
+          <form ng-submit="vm.SendMsg()">
+            <md-input-container class="md-icon-float md-block">
+              <label>mensagem</label>
+
+              <md-icon
+                md-svg-src="images/paper-plane.svg">
+              </md-icon>
+
+              <input ng-model="vm.message" type="text">
+            </md-input-container>
+          </form>
+        </md-content>
 
 
-    <!-- Libs -->
+      </section>
+    </main>
+
+
+    <!-- Angular, Angular Material -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
+    <!-- Moment -->
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.6/angular-moment.min.js"></script>
+
+    <!-- Socket.io -->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-    <!-- Custom -->
+
+    <!-- Author -->
     <script src="js/modules/app.js"></script>
     <script src="js/controllers/login.js"></script>
     <script src="js/controllers/main.js"></script>

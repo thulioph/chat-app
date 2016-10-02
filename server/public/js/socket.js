@@ -14,8 +14,8 @@ function _buildLog(obj) {
   li = $('<li>');
   div = $('<div class="msg-area">');
 
-  h4 = $('<h4 class="user">').text(obj.user);
-  p = $('<p class="message">').text(obj.msg);
+  h4 = $('<h4 class="user">').text(obj.name);
+  p = $('<p class="message">').text(obj.message);
   date = $('<span class="date">').text(obj.timestamp);
 
   (li).append(div);

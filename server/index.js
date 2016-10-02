@@ -9,6 +9,7 @@ app.set('port', process.env.PORT || 8899);
 
 app.use('/css', express.static(path.join(__dirname, '/public/css/')));
 app.use('/js', express.static(path.join(__dirname, '/public/js/')));
+app.use('/images', express.static(path.join(__dirname, '/public/images/')));
 
 server = http.createServer(app);
 
