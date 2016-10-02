@@ -1,47 +1,53 @@
-//
-// Firebase
-//
+(function() {
 
-InitFirebase();
+  function Firebase(CONFIG) {
 
-function InitFirebase() {
-  config = {
-    apiKey: "AIzaSyBUPtWSIjrJZaN8O-4SLgj928-FNnjXxWc",
-    authDomain: "realtime-chatapp.firebaseapp.com",
-    databaseURL: "https://realtime-chatapp.firebaseio.com",
-    storageBucket: "realtime-chatapp.appspot.com",
-  };
+    return {
+      Init: Initialize,
+      Create: SetDatabase,
+      Listen: ListenDatabase,
+      Set: SetDataIntoDB
+    };
 
-  firebase.initializeApp(config);
+    function Initialize() {
+      var config;
 
-  // ====
+      config = {
+        apiKey: CONFIG.FIREBASE_KEY,
+        authDomain: CONFIG.DOMAIN,
+        databaseURL: CONFIG.DB_URL,
+        storageBucket: CONFIG.DB_BUCKET
+      };
 
-  chat_log = SetDatabase('chat_log');
-  system_log = SetDatabase('system_log');
+      return firebase.initializeApp(config);
+    }
 
-  // ====
+    function SetDatabase(db) {
+      return firebase.database().ref(db);
+    }
 
-  chat_log.on('value', function(snapshot) {
-    console.info('chat_log');
-    console.warn(snapshot.val());
-  });
+    function ListenDatabase(db, callback) {
+      db.on('child_added', function(snapshot) {
+        return callback(snapshot.val());
+      })
+    }
 
-  system_log.on('value', function(snapshot) {
-    console.info('system_log');
-    console.warn(snapshot.val());
-  });
-}
+    function SetDataIntoDB(db, obj) {
+      db.push(obj).then(function(result) {
+        console.error(result);
+        return result;
+      }, function(err) {
+        console.error(err);
+        return err;
+      });
+    }
 
-function SetDatabase(db) {
-  return firebase.database().ref(db);
-}
+  }
 
-function SetDataIntoDB(db, obj) {
-  db.push(obj).then(function(result) {
-    console.info(result);
-    return result;
-  }, function(err) {
-    console.error(err);
-    return err;
-  });
-}
+  Firebase.$inject = ['CONFIG'];
+
+  angular
+  .module('ChatApp')
+  .service('Firebase', Firebase);
+
+})();

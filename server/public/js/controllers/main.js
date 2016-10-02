@@ -1,20 +1,33 @@
 (function() {
 
-  function MainCtrl($log, $rootScope, $scope, Socket) {
+  function MainCtrl($log, $rootScope, $scope, Socket, Firebase) {
     var vm, socket;
 
     vm = this;
 
-    vm.message = '';
     vm.GetUser = GetUser;
+
+    vm.message = '';
     vm.SendMsg = SendMessage;
+
     vm.SocketListeners = SocketListeners;
+
+    vm.InitFirebase = InitFirebase;
+    vm.DatabaseListeners = DatabaseListeners;
+
+    // ====
 
     vm.GetUser();
 
+    // ====
+
     function GetUser() {
       vm.user_info = $rootScope.User;
+
       vm.messages = [];
+      vm.chats = [];
+
+      vm.InitFirebase();
 
       vm.socket = Socket.Init();
       vm.SocketListeners();
@@ -31,35 +44,57 @@
       vm.message = '';
     }
 
+    function InitFirebase() {
+      Firebase.Init();
+
+      vm.chat_log = Firebase.Create('chat_log');
+      vm.system_log = Firebase.Create('system_log');
+      vm.user_entry = Firebase.Create('user_entry');
+
+      vm.DatabaseListeners();
+    }
+
     function SocketListeners() {
       Socket.Listen(vm.socket, 'chat_message', function(data) {
-        $scope.$apply(function() {
-          vm.messages.push(data);
-        });
+        Firebase.Set(vm.chat_log, data);
       });
 
       Socket.Listen(vm.socket, 'guest_connected', function(data) {
-        $scope.$apply(function() {
-          vm.messages.push(data);
-        });
+        Firebase.Set(vm.system_log, data);
       });
 
       Socket.Listen(vm.socket, 'guest_disconnect', function(data) {
+        Firebase.Set(vm.system_log, data);
+      });
+
+      Socket.Listen(vm.socket, 'new_user', function(data) {
+        Firebase.Set(vm.user_entry, data);
+      });
+    }
+
+    function DatabaseListeners() {
+      Firebase.Listen(vm.chat_log, function(data) {
         $scope.$apply(function() {
           vm.messages.push(data);
         });
       });
 
-      Socket.Listen(vm.socket, 'new_user', function(data) {
+      Firebase.Listen(vm.system_log, function(data) {
         $scope.$apply(function() {
-          vm.messages.push(data);
+          vm.chats.push(data);
+        });
+      });
+
+      Firebase.Listen(vm.user_entry, function(data) {
+        $scope.$apply(function() {
+          vm.chats.push(data);
         });
       });
     }
 
   }
 
-  MainCtrl.$inject = ['$log', '$rootScope', '$scope', 'Socket'];
+  MainCtrl.$inject = ['$log', '$rootScope', '$scope', 'Socket', 'Firebase'];
 
   angular
   .module('ChatApp')
