@@ -1,38 +1,62 @@
 <!doctype html>
-<html>
+<html ng-app="ChatApp">
   <head>
+    <meta charset="utf-8">
+
     <title>Real-time chat App</title>
-    <link rel="stylesheet" href="css/main.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   </head>
   <body>
-    <ul id="messages"></ul>
 
-    <form>
-      <input
-        id="user"
-        type="text"
-        placeholder="Nome">
+    <main layout="column" layout-align="space-around stretch">
+      <section ng-if="!User">
+        <div
+          ng-include
+          src="'templates/login.tmpl.html'">
+        </div>
+      </section>
 
-      <br>
+      <section ng-if="User">
+        <div
+          ng-include
+          src="'templates/main.tmpl.html'">
+        </div>
+      </section>
+    </main>
 
-      <textarea
-        id="msg"
-        placeholder="Mensagem">
-      </textarea>
 
-      <button>Send</button>
-    </form>
+    <!-- Angular, Angular Material -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-    <!-- Libs -->
+    <!-- Moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.6/angular-moment.min.js"></script>
+
+    <!-- Socket.io -->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
 
-    <!-- Custom -->
-    <script src="js/socket.js"></script>
-    <script src="js/firebase.js"></script>
+
+    <!-- Author -->
+    <script src="js/modules/app.js"></script>
+    <script src="js/app.config.js"></script>
+    <script src="js/controllers/login.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/services/socket.js"></script>
+    <script src="js/services/firebase.js"></script>
+
     <script src="js/network.js"></script>
     <script src="js/light-events.js"></script>
-    <script src="js/main.js"></script>
   </body>
 </html>
