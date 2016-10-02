@@ -13,7 +13,7 @@
     vm.SocketListeners = SocketListeners;
 
     vm.InitFirebase = InitFirebase;
-    vm.DatabaseListeners = DatabaseListeners;
+    // vm.DatabaseListeners = DatabaseListeners;
 
     // ====
 
@@ -47,16 +47,18 @@
     function InitFirebase() {
       Firebase.Init();
 
-      vm.chat_log = Firebase.Create('chat_log');
+      vm.chat_log = Firebase.Create('logs'); // chat_log
       vm.system_log = Firebase.Create('system_log');
       vm.user_entry = Firebase.Create('user_entry');
-
-      vm.DatabaseListeners();
     }
 
     function SocketListeners() {
       Socket.Listen(vm.socket, 'chat_message', function(data) {
         Firebase.Set(vm.chat_log, data);
+
+        $scope.$apply(function() {
+          vm.messages.push(data);
+        });
       });
 
       Socket.Listen(vm.socket, 'guest_connected', function(data) {
@@ -69,26 +71,6 @@
 
       Socket.Listen(vm.socket, 'new_user', function(data) {
         Firebase.Set(vm.user_entry, data);
-      });
-    }
-
-    function DatabaseListeners() {
-      Firebase.Listen(vm.chat_log, function(data) {
-        $scope.$apply(function() {
-          vm.messages.push(data);
-        });
-      });
-
-      Firebase.Listen(vm.system_log, function(data) {
-        $scope.$apply(function() {
-          vm.chats.push(data);
-        });
-      });
-
-      Firebase.Listen(vm.user_entry, function(data) {
-        $scope.$apply(function() {
-          vm.chats.push(data);
-        });
       });
     }
 

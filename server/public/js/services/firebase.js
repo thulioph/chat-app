@@ -5,7 +5,6 @@
     return {
       Init: Initialize,
       Create: SetDatabase,
-      Listen: ListenDatabase,
       Set: SetDataIntoDB
     };
 
@@ -26,18 +25,8 @@
       return firebase.database().ref(db);
     }
 
-    function ListenDatabase(db, callback) {
-      db.on('child_added', function(snapshot) {
-        return callback(snapshot.val());
-      })
-    }
-
     function SetDataIntoDB(db, obj) {
-      db.push(obj).then(function(result) {
-        return result;
-      }, function(err) {
-        return err;
-      });
+      db.push(obj);
     }
 
   }
