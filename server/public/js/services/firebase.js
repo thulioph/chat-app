@@ -5,7 +5,8 @@
     return {
       Init: Initialize,
       Create: SetDatabase,
-      Set: SetDataIntoDB
+      Set: SetDataIntoDB,
+      Listen: ListenDb
     };
 
     function Initialize() {
@@ -27,6 +28,12 @@
 
     function SetDataIntoDB(db, obj) {
       db.push(obj);
+    }
+
+    function ListenDb(db, evt, callback) {
+      db.on(evt, function(dataSnapshot) {
+        callback(dataSnapshot.val());
+      })
     }
 
   }

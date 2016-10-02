@@ -54,11 +54,11 @@
 
     function SocketListeners() {
       Socket.Listen(vm.socket, 'chat_message', function(data) {
+        console.warn(data);
+
         Firebase.Set(vm.chat_log, data);
 
-        $scope.$apply(function() {
-          vm.messages.push(data);
-        });
+        FirebaseListeners();
       });
 
       Socket.Listen(vm.socket, 'guest_connected', function(data) {
@@ -72,6 +72,16 @@
       Socket.Listen(vm.socket, 'new_user', function(data) {
         Firebase.Set(vm.user_entry, data);
       });
+    }
+
+    function FirebaseListeners() {
+      Firebase.Listen(vm.chat_log, 'value', function(result) {
+        $scope.$apply(function() {
+          vm.messages = result;
+        });
+
+        // console.info('OPA!', result);
+      })
     }
 
   }
