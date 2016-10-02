@@ -34,10 +34,8 @@
 
     function SetDataIntoDB(db, obj) {
       db.push(obj).then(function(result) {
-        console.error(result);
         return result;
       }, function(err) {
-        console.error(err);
         return err;
       });
     }
