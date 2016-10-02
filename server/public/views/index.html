@@ -1,27 +1,39 @@
 <!doctype html>
-<html>
+<html ng-app="ChatApp">
   <head>
     <title>Real-time chat App</title>
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <ul id="messages"></ul>
 
-    <form>
-      <input
-        id="user"
-        type="text"
-        placeholder="Nome">
+    <!-- Login -->
+    <section class="login" ng-controller="LoginCtrl as vm">
+      <form>
+        <input type="text">
+      </form>
+    </section>
 
-      <br>
+    <!-- Form and feeds -->
+    <section class="main" ng-controller="MainCtrl as vm">
+      <ul id="messages"></ul>
 
-      <textarea
-        id="msg"
-        placeholder="Mensagem">
-      </textarea>
+      <form>
+        <input
+          id="user"
+          type="text"
+          placeholder="Nome">
 
-      <button>Send</button>
-    </form>
+        <br>
+
+        <textarea
+          id="msg"
+          placeholder="Mensagem">
+        </textarea>
+
+        <button>Send</button>
+      </form>
+    </section>
+
 
     <!-- Libs -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
@@ -29,7 +41,12 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
 
+
     <!-- Custom -->
+    <script src="js/modules/app.js"></script>
+    <script src="js/controllers/login.js"></script>
+    <script src="js/controllers/main.js"></script>
+
     <script src="js/socket.js"></script>
     <script src="js/firebase.js"></script>
     <script src="js/network.js"></script>
