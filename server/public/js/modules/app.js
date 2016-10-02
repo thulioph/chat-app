@@ -3,6 +3,6 @@
   'use strict';
 
   angular
-  .module('ChatApp', []);
+  .module('ChatApp', ['ngMaterial']);
 
 })();
