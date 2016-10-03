@@ -45,7 +45,7 @@
     function InitFirebase() {
       Firebase.Init();
 
-      vm.chat_log = Firebase.Create('logs'); // chat_log
+      vm.chat_log = Firebase.Create('chat_log');
       vm.system_log = Firebase.Create('system_log');
       vm.user_entry = Firebase.Create('user_entry');
 
