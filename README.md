@@ -6,7 +6,7 @@
 
 ## Demo
 
-[Exemplo no Heroku](https://goo.gl/yrf94y)
+[Exemplo no Heroku](https://goo.gl/5j2V5m)
 
 
 ## Recursos
