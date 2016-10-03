@@ -1,6 +1,6 @@
 (function() {
 
-  function LoginCtrl($log, $rootScope, $window, DeviceLight) {
+  function LoginCtrl($log, $rootScope, $window, DeviceLight, Network) {
     var vm;
 
     vm = this;
@@ -13,6 +13,14 @@
 
     $window.addEventListener('devicelight', function(e) {
       DeviceLight.Init(e);
+    });
+
+    $window.addEventListener('online', function(e) {
+      Network.Listen(e);
+    });
+
+    $window.addEventListener('offline', function(e) {
+      Network.Listen(e);
     });
 
     // ====
@@ -33,7 +41,8 @@
     '$log',
     '$rootScope',
     '$window',
-    'DeviceLight'
+    'DeviceLight',
+    'Network'
   ];
 
   angular

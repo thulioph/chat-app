@@ -1,22 +1,28 @@
 (function() {
 
-  var network, status;
+  function Network() {
 
-  network = true;
+    return {
+      Listen: ChangeNetwork
+    };
 
-  function ChangeNetwork(event) {
-    console.info(event.timeStamp);
+    var network, status;
 
-    status = navigator.onLine ? 'online' : 'offline';
+    network = true;
 
-    if (status != 'online') {
-      document.body.classList.add('offline');
-    } else {
-      document.body.classList.remove('offline');
+    function ChangeNetwork(event) {
+      status = navigator.onLine ? 'online' : 'offline';
+
+      if (status != 'online') {
+        document.body.classList.add('offline');
+      } else {
+        document.body.classList.remove('offline');
+      }
     }
   }
 
-  window.addEventListener('online', ChangeNetwork);
-  window.addEventListener('offline', ChangeNetwork);
+  angular
+  .module('ChatApp')
+  .service('Network', Network);
 
 })();
