@@ -16,9 +16,19 @@
     }
 
     function Create(obj) {
+      // switch (obj.icon) {
+      //   case 'log':
+      //     obj.icon = '';
+      //   break;
+
+      //   case 'url':
+      //     obj.icon = '';
+      //   break;
+      // }
+
       return new window.Notification(obj.title, {
         body: obj.body,
-        icon: obj.icon
+        icon: '../images/paper-plane.svg'
       });
     }
 

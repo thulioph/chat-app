@@ -1,6 +1,6 @@
 (function() {
 
-  function MainCtrl($log, $rootScope, $scope, Socket, Firebase) {
+  function MainCtrl($log, $rootScope, $scope, Socket, Firebase, Notification) {
     var vm, socket;
 
     vm = this;
@@ -63,10 +63,22 @@
 
       Socket.Listen(vm.socket, 'guest_connected', function(data) {
         Firebase.Set(vm.system_log, data);
+
+        Notification.Create({
+          'title': 'Atenção!',
+          'body': 'Um novo usuário acabou de entrar.',
+          'icon': 'log'
+        });
       });
 
       Socket.Listen(vm.socket, 'guest_disconnect', function(data) {
         Firebase.Set(vm.system_log, data);
+
+        Notification.Create({
+          'title': 'Atenção!',
+          'body': 'Um usuário acabou de sair.',
+          'icon': 'log'
+        });
       });
 
       Socket.Listen(vm.socket, 'new_user', function(data) {
@@ -88,7 +100,8 @@
     '$rootScope',
     '$scope',
     'Socket',
-    'Firebase'
+    'Firebase',
+    'Notification'
   ];
 
   angular
