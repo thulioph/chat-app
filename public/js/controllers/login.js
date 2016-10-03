@@ -47,18 +47,16 @@
         permission.then(function(permission) {
           if (permission === 'granted') {
             Notification.Create({
-              'title': 'Não tem',
-              'body': 'Mensagem',
-              'icon': 'url'
+              'title': 'Atenção!',
+              'body': 'Você receberá notificações durante o uso.'
             });
           }
         })
 
       } else {
         Notification.Create({
-            'title': 'Já tem',
-            'body': 'Mensagem',
-            'icon': 'url'
+            'title': 'Atenção',
+            'body': 'Bem-vindo de volta!'
           });
       }
 

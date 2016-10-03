@@ -67,7 +67,6 @@
         Notification.Create({
           'title': 'Atenção!',
           'body': 'Um novo usuário acabou de entrar.',
-          'icon': 'log'
         });
       });
 
@@ -77,7 +76,6 @@
         Notification.Create({
           'title': 'Atenção!',
           'body': 'Um usuário acabou de sair.',
-          'icon': 'log'
         });
       });
 

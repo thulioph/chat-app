@@ -16,19 +16,9 @@
     }
 
     function Create(obj) {
-      // switch (obj.icon) {
-      //   case 'log':
-      //     obj.icon = '';
-      //   break;
-
-      //   case 'url':
-      //     obj.icon = '';
-      //   break;
-      // }
-
       return new window.Notification(obj.title, {
         body: obj.body,
-        icon: '../images/paper-plane.svg'
+        icon: 'https://www.iconfinder.com/icons/353434/download/png/48'
       });
     }
 
