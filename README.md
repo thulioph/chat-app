@@ -1,7 +1,7 @@
 ## Real time chat app 📱⏱
 > chat construido com Firebase, Socket.io e Node.js.
 
-[![code](https://img.shields.io/badge/code-4.2.0-red.svg)](https://github.com/thulioph/realtime-chatapp/blob/master/client/Gruntfile.js) [![Code Climate](https://codeclimate.com/github/thulioph/realtime-chatapp/badges/gpa.svg)](https://codeclimate.com/github/thulioph/realtime-chatapp)
+[![code](https://img.shields.io/badge/code-4.2.0-red.svg)](https://github.com/thulioph/chat-app) [![Code Climate](https://codeclimate.com/github/thulioph/chat-app/badges/gpa.svg)](https://codeclimate.com/github/thulioph/chat-app)
 
 
 ## Demo
