@@ -24,22 +24,10 @@
 
 ## Instalação
 
-Antes de prosseguir com a instalação, certifique-se de que você tenha essas dependências instaladas na sua máquina:
+Antes de prosseguir com a instalação, certifique-se de que você tenha o [Nodejs](https://nodejs.org/en/download/) instalado na sua máquina.
 
-* [Nodejs](https://nodejs.org/en/download/)
-* [Bower](https://bower.io/#install-bower)
-* [Grunt](http://gruntjs.com/getting-started#installing-the-cli)
+Caso tenha instalado, prossiga com os comandos:
 
-Execute comandos nas duas pastas: `client` e `server`.
-
-#### client
-```shell
-  $ npm install
-  $ bower install --save
-  $ grunt serve
-```
-
-#### server
 ```shell
   $ npm install
   $ node index.js
