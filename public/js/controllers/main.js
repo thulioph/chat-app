@@ -83,7 +83,13 @@
 
   }
 
-  MainCtrl.$inject = ['$log', '$rootScope', '$scope', 'Socket', 'Firebase'];
+  MainCtrl.$inject = [
+    '$log',
+    '$rootScope',
+    '$scope',
+    'Socket',
+    'Firebase'
+  ];
 
   angular
   .module('ChatApp')
