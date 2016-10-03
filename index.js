@@ -42,8 +42,6 @@ io.on('connection', function(socket){
 
   // quando um usuário se desconectar
   socket.on('disconnect', function() {
-    console.info('O servidor ouviu o evento de disconnect.');
-
     var obj;
 
     obj = {
@@ -57,13 +55,11 @@ io.on('connection', function(socket){
 
   // quando um usuário escrever uma mensagem
   socket.on('chat message', function(msg) {
-    console.info('O servidor ouviu o evento de chat_message.');
     io.emit('chat_message', msg);
   });
 
   // quando um novo usuário entrar
   socket.on('novo_usuario', function(obj) {
-    console.info('O servidor ouviu o evento de novo_usuario.');
     io.emit('new_user', obj);
   })
 });
