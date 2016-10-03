@@ -1,0 +1,42 @@
+<div ng-controller="MainCtrl as vm">
+  <md-toolbar class="md-primary">
+    <div class="md-tollbar-tools">
+      <h2 class="md-title">
+        {{ ::vm.user_info.event }}
+      </h2>
+
+      <h4 class="md-subhead">
+        {{ ::vm.user_info.name }}
+      </h4>
+    </div>
+  </md-toolbar>
+
+  <md-content flex layout-padding>
+    <md-list class="md-dense" flex>
+      <md-list-item class="md-2-line" ng-repeat="feed in vm.messages track by $index">
+        <img class="md-avatar"
+          src="http://dummyimage.com/100x100/4d494d/686a82.gif&text=user"
+          alt="user">
+
+        <div class="md-list-item-text" layout="column">
+          <h3>{{feed.name}}</h3>
+          <p>{{feed.message}}</p>
+        </div>
+      </md-list-item>
+    </md-list>
+
+    <!--  -->
+
+    <form ng-submit="vm.SendMsg()">
+      <md-input-container class="md-icon-float md-block">
+        <label>mensagem</label>
+
+        <md-icon
+          md-svg-src="images/paper-plane.svg">
+        </md-icon>
+
+        <input ng-model="vm.message" type="text">
+      </md-input-container>
+    </form>
+  </md-content>
+</div>

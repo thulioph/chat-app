@@ -6,7 +6,7 @@
 
 ## Demo
 
-[Exemplo no Heroku](https://goo.gl/yrf94y)
+[Exemplo no Heroku](https://goo.gl/5j2V5m)
 
 
 ## Recursos
@@ -14,6 +14,7 @@
 #### web apis
 - [Navigator Online](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine)
 - [Ambient Light Events](https://developer.mozilla.org/en-US/docs/Web/API/Ambient_Light_Events)
+- [Notifications](https://developer.mozilla.org/en-US/docs/Web/API/Notification)
 
 #### assets
 - [Socket.io](http://socket.io/)
