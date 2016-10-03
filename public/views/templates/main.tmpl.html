@@ -19,7 +19,12 @@
           alt="user">
 
         <div class="md-list-item-text" layout="column">
-          <h3>{{feed.name}}</h3>
+          <h3>
+            {{feed.name}}
+
+            <span>{{feed.timestamp | amDateFormat:'HH:mm'}}</span>
+          </h3>
+
           <p>{{feed.message}}</p>
         </div>
       </md-list-item>
