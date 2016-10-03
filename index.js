@@ -7,6 +7,7 @@ path = require('path');
 app = express();
 app.set('port', process.env.PORT || 8899);
 
+app.use('/icons', express.static(path.join(__dirname, '/icons/')));
 app.use('/js', express.static(path.join(__dirname, '/public/js/')));
 app.use('/images', express.static(path.join(__dirname, '/public/images/')));
 app.use('/templates', express.static(path.join(__dirname, '/public/views/templates/')));

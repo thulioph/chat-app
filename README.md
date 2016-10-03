@@ -1,8 +1,10 @@
+![chat-app-icon](public/images/icon.png)
+
+
 ## Real time chat app 📱⏱
 > chat construido com Firebase, Socket.io e Node.js.
 
 [![code](https://img.shields.io/badge/code-4.2.0-red.svg)](https://github.com/thulioph/chat-app) [![Code Climate](https://codeclimate.com/github/thulioph/chat-app/badges/gpa.svg)](https://codeclimate.com/github/thulioph/chat-app)
-
 
 ## Demo
 
@@ -52,6 +54,16 @@ A aplicação deverá funcionar nos seguintes navegadores:
 5. Submeta um pull request.
 
 
+## Autor
+
+**Thulio Philipe (thulioph)**
+- [https://twitter.com/thulioph_](https://twitter.com/thulioph_)
+- [http://github.com/thulioph](http://github.com/thulioph)
+
+
 ## License
 
 [MIT License](./LICENSE) © Thulio Philipe
+
+
+> Icon Typing Message by Chris from the Noun Project
