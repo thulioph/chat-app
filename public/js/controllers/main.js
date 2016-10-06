@@ -64,19 +64,19 @@
       Socket.Listen(vm.socket, 'guest_connected', function(data) {
         Firebase.Set(vm.system_log, data);
 
-        Notification.Create({
-          'title': 'Atenção!',
-          'body': 'Um novo usuário acabou de entrar.',
-        });
+        // Notification.Create({
+        //   'title': 'Atenção!',
+        //   'body': 'Um novo usuário acabou de entrar.',
+        // });
       });
 
       Socket.Listen(vm.socket, 'guest_disconnect', function(data) {
         Firebase.Set(vm.system_log, data);
 
-        Notification.Create({
-          'title': 'Atenção!',
-          'body': 'Um usuário acabou de sair.',
-        });
+        // Notification.Create({
+        //   'title': 'Atenção!',
+        //   'body': 'Um usuário acabou de sair.',
+        // });
       });
 
       Socket.Listen(vm.socket, 'new_user', function(data) {
