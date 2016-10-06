@@ -1,6 +1,6 @@
 (function() {
 
-  function LoginCtrl($log, $rootScope, $window, DeviceLight, Network, Notification) {
+  function LoginCtrl($log, $rootScope, $window, DeviceLight, Network) {
     var vm;
 
     vm = this;
@@ -9,7 +9,7 @@
     vm.login = Login;
     vm.SaveUser = SaveUser;
 
-    GetNotification();
+    // GetNotification();
 
     // ====
 
@@ -72,8 +72,7 @@
     '$rootScope',
     '$window',
     'DeviceLight',
-    'Network',
-    'Notification'
+    'Network'
   ];
 
   angular
