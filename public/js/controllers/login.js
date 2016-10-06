@@ -41,6 +41,10 @@
     function GetNotification() {
       var permission;
 
+      permission = Notification.Init();
+
+      return console.warn(permission);
+
       if (Notification.Init() !== 'granted') {
         permission = Notification.GetPermission();
 
