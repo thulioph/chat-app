@@ -8,7 +8,11 @@
     };
 
     function Initialize() {
-      return window.Notification.permission;
+      if (!("Notification" in window)) {
+        alert("Seu navegador, não suporta notificações!");
+      } else {
+        return window.Notification.permission;
+      }
     }
 
     function GetPermission(callback) {
